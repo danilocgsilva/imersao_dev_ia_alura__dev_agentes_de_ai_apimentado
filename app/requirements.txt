@@ -1,0 +1,2 @@
+# acesso ao banco de dados
+mysql-connector-python
