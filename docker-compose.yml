@@ -8,6 +8,15 @@ services:
     working_dir: /app
     depends_on:
       - imersao_alura_agentes_ia_dados
+    environment:
+      - HOST_BANCO=imersao_alura_agentes_ia_dados
+      - USUARIO_BANCO=${USUARIO_BANCO}
+      - SENHA_BANCO=${SENHA_BANCO}
+      - NOME_BANCO=${NOME_BANCO}
+      - FLASK_APP=/app/app.py
+      - CHAVE_API_GOOGLE=${SENHA_CHAVE_API_GOOGLEBANCO}
+    ports:
+      - "5000:5000"
   imersao_alura_agentes_ia_dados:
     image: 'mysql:latest'
     container_name: imersao_alura_agentes_ia_dados

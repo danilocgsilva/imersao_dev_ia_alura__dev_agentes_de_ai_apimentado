@@ -1,0 +1,5 @@
+# acesso ao banco de dados
+mysql-connector-python
+
+# framework web
+flask

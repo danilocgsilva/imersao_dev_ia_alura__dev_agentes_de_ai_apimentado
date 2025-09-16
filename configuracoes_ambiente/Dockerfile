@@ -9,6 +9,7 @@ RUN apt-get install \
     python3-pip \
     mariadb-client \
     -y
+RUN pip install --upgrade pip-tools --break-system-packages
 
 RUN curl -sL https://deb.nodesource.com/setup_24.x | bash - 
 RUN apt-get install -y nodejs
