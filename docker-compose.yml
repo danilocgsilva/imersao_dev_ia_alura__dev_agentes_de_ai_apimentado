@@ -1,0 +1,8 @@
+services:
+  imersao_alura_agentes_ia_ambiente:
+    build:
+      context: configuracoes_ambiente
+    container_name: imersao_alura_agentes_ia_ambiente
+    volumes:
+      - './app:/app'
+    working_dir: /app
