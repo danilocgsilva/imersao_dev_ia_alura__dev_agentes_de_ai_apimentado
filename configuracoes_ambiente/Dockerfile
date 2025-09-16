@@ -7,6 +7,7 @@ RUN apt-get install \
     git \
     python3 \
     python3-pip \
+    mariadb-client \
     -y
 
 RUN curl -sL https://deb.nodesource.com/setup_24.x | bash - 
