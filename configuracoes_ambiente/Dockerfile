@@ -14,4 +14,7 @@ RUN pip install --upgrade pip-tools --break-system-packages
 RUN curl -sL https://deb.nodesource.com/setup_24.x | bash - 
 RUN apt-get install -y nodejs
 
+COPY instalar_dependencias_e_iniciar.sh /instalar_dependencias_e_iniciar.sh
+RUN chmod +x /instalar_dependencias_e_iniciar.sh
+
 CMD ["sleep", "1000"]
