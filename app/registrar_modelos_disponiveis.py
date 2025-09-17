@@ -1,4 +1,9 @@
 from suporte.Banco import Banco
+from GoogleApiWrapper import GoogleApiWrapper
 
+gaw = GoogleApiWrapper()
 banco = Banco()
-banco.registrar_modelos_disponiveis()
+
+modelos = gaw.getModels()
+banco.registrar_modelos_disponiveis(modelos)
+

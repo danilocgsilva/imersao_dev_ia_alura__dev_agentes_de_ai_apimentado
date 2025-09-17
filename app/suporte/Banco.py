@@ -37,12 +37,40 @@ class Banco:
                 mycursor.close()
                 mydb.close()
     
-    def registrar_modelos_disponiveis(self):
-        gaw = GoogleApiWrapper()
-        modelos = gaw.getModels()
+    def registrar_modelos_disponiveis(self, modelos: list):
+        
+        self.registrar_request_de_busca_modelos_disponiveis(modelos)
+        
+        for modelo in modelos:
+            print("-----")
+            for property in dir(modelo):
+                value = getattr(modelo, property)
+                value_type = type(value).__name__
+                
+                is_method = value_type == "method"
+                is_none_type = value_type == "NoneType"
+                is_builtin_function_or_method = value_type == "builtin_function_or_method"
+                is_method_wrapper = value_type == "method-wrapper"
+                is_tuple = value_type == "tuple"
+                is_dict = value_type == "dict"
+                is_data_class_params = value_type == "_DataclassParams"
+                is_type = value_type == "type"
+                is_list = value_type == "list"
+                
+                if not is_none_type \
+                    and not is_builtin_function_or_method \
+                    and not is_method \
+                    and not is_method_wrapper \
+                    and not is_tuple \
+                    and not is_dict \
+                    and not is_data_class_params \
+                    and not is_type \
+                    and not is_list:
+                    print(f"   - {property}, {value_type} ,{value}")
+                    
+    def registrar_request_de_busca_modelos_disponiveis(self, modelos):
         modelos_serializados = pickle.dumps(modelos)
         modelos_serializados_base64 = base64.b64encode(modelos_serializados).decode('utf-8')
         self.nome_banco = os.environ.get("NOME_BANCO")
         self.executar_sql(f"INSERT INTO busca_api (comando, retorno_serializado) VALUES (%s, %s);", ('GoogleApiWrapper().getModels()', modelos_serializados_base64,))
-        
         
