@@ -14,7 +14,7 @@ services:
       - SENHA_BANCO=${SENHA_BANCO}
       - NOME_BANCO=${NOME_BANCO}
       - FLASK_APP=/app/app.py
-      - CHAVE_API_GOOGLE=${SENHA_CHAVE_API_GOOGLEBANCO}
+      - CHAVE_API_GOOGLE=${CHAVE_API_GOOGLE}
     ports:
       - "5000:5000"
   imersao_alura_agentes_ia_dados:
