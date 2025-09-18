@@ -44,30 +44,16 @@ class Banco:
                 mydb.close()
     
     def registrar_modelos_disponiveis(self, modelos: list):
-        
         self.registrar_request_de_busca_modelos_disponiveis(modelos)
+        
         id_registro_request = self.ultimo_id_inserido
         
         for modelo in modelos:
-            
             self.salvar_modelo(modelo, id_registro_request)
             id_modelo_iteracao = self.ultimo_id_inserido
             
-            for property in dir(modelo):
-                value = getattr(modelo, property)
-                value_type = type(value).__name__
-                
-                is_str = value_type == "str"
-                is_int = value_type == "int"
-                is_float = value_type == "float"
-                is_list = value_type == "list"
-                
-                if is_str or is_int or is_float:
-                    self.executar_sql("INSERT INTO modelos_meta_dados (campo, tipo_valor, valor, modelo_id) VALUES (%s, %s, %s, %s);", (property, value_type, value, id_modelo_iteracao))
-                if is_list:
-                    for entry in value:
-                        self.executar_sql("INSERT INTO modelos_meta_dados (campo, tipo_valor, valor, modelo_id) VALUES (%s, %s, %s, %s);", (property, value_type, entry, id_modelo_iteracao))
-                    
+            self.registrar_metadados_modelo(modelo, id_modelo_iteracao)
+            
     def registrar_request_de_busca_modelos_disponiveis(self, modelos):
         modelos_serializados = pickle.dumps(modelos)
         modelos_serializados_base64 = base64.b64encode(modelos_serializados).decode('utf-8')
@@ -76,3 +62,19 @@ class Banco:
         
     def salvar_modelo(self, modelo, id_registro_request: int):
         self.executar_sql("INSERT INTO modelos (name, busca_id) VALUES (%s, %s)", (modelo.name, id_registro_request))
+
+    def registrar_metadados_modelo(self, modelo, id_modelo):
+        for property in dir(modelo):
+            value = getattr(modelo, property)
+            value_type = type(value).__name__
+            
+            is_str = value_type == "str"
+            is_int = value_type == "int"
+            is_float = value_type == "float"
+            is_list = value_type == "list"
+            
+            if is_str or is_int or is_float:
+                self.executar_sql("INSERT INTO modelos_meta_dados (campo, tipo_valor, valor, modelo_id) VALUES (%s, %s, %s, %s);", (property, value_type, value, id_modelo))
+            if is_list:
+                for entry in value:
+                    self.executar_sql("INSERT INTO modelos_meta_dados (campo, tipo_valor, valor, modelo_id) VALUES (%s, %s, %s, %s);", (property, value_type, entry, id_modelo))
