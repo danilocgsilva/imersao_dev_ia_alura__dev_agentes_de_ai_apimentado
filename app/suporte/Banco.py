@@ -5,9 +5,10 @@ import pickle
 import base64
 
 class Banco:
-    def __init__(self):
+    def __init__(self, logger = None):
         self._nome_banco = None
         self._ultimo_id_inserido_banco = None
+        self._logger = logger
     
     @property
     def nome_banco(self):
@@ -45,11 +46,13 @@ class Banco:
     
     def registrar_modelos_disponiveis(self, modelos: list):
         self.registrar_request_de_busca_modelos_disponiveis(modelos)
+        self._loginfo("Resultados da busca da api registrados em banco.")
         
         id_registro_request = self.ultimo_id_inserido
         
         for modelo in modelos:
             self.salvar_modelo(modelo, id_registro_request)
+            self._loginfo(f"Modelo {modelo.name} registrado em banco")
             id_modelo_iteracao = self.ultimo_id_inserido
             
             self.registrar_metadados_modelo(modelo, id_modelo_iteracao)
@@ -78,3 +81,7 @@ class Banco:
             if is_list:
                 for entry in value:
                     self.executar_sql("INSERT INTO modelos_meta_dados (campo, tipo_valor, valor, modelo_id) VALUES (%s, %s, %s, %s);", (property, value_type, entry, id_modelo))
+                    
+    def _loginfo(self, mensagem):
+        if self._logger:
+            self._logger.info(mensagem)

@@ -1,8 +1,11 @@
 import logging
+import uuid
 
 class SupportFactory:
     @staticmethod
-    def getLogger():
+    def getLogger(identificador: str = None):
+        if not identificador:
+            identificador = str(uuid.uuid4())
         logging.getLogger().setLevel(logging.DEBUG)
 
         file_handler = logging.FileHandler("app.log")
@@ -10,7 +13,7 @@ class SupportFactory:
 
         formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
-        logger = logging.getLogger("agentes ia Alura")
+        logger = logging.getLogger(identificador)
         logger.addHandler(file_handler)
         file_handler.setFormatter(formatter)
 
