@@ -1,8 +1,6 @@
 import mysql.connector
 import os
-from GoogleApiWrapper import GoogleApiWrapper
-import pickle
-import base64
+from suporte.Utilidades import Utilidades
 
 class Banco:
     def __init__(self, logger = None):
@@ -37,7 +35,9 @@ class Banco:
             self._ultimo_id_inserido_banco = mycursor.lastrowid
             return results
         except mysql.connector.Error as err:
-            print(f"Error connecting to database or executing query: {err}")
+            mensagem_erro = f"Error connecting to database or executing query: {err}"
+            self._logger.error(mensagem_erro)
+            print(mensagem_erro)
         finally:
             if mydb and mydb.is_connected():
                 mydb.commit()
@@ -45,25 +45,29 @@ class Banco:
                 mydb.close()
     
     def registrar_modelos_disponiveis(self, modelos: list):
+        quantidade_modelos_encontrados = str(len(modelos))
+        self._loginfo(f"Foram encontrados {quantidade_modelos_encontrados} modelos")
         self.registrar_request_de_busca_modelos_disponiveis(modelos)
         self._loginfo("Resultados da busca da api registrados em banco.")
         
         id_registro_request = self.ultimo_id_inserido
         
+        loop_modelos = 1
         for modelo in modelos:
+            self._loginfo(f"Modelo {loop_modelos} de {quantidade_modelos_encontrados} modelos.")
             self.salvar_modelo(modelo, id_registro_request)
-            self._loginfo(f"Modelo {modelo.name} registrado em banco")
             id_modelo_iteracao = self.ultimo_id_inserido
-            
             self.registrar_metadados_modelo(modelo, id_modelo_iteracao)
+            self._loginfo(f"Modelo {modelo.name} registrado em banco")
+            loop_modelos += 1
             
     def registrar_request_de_busca_modelos_disponiveis(self, modelos):
-        modelos_serializados = pickle.dumps(modelos)
-        modelos_serializados_base64 = base64.b64encode(modelos_serializados).decode('utf-8')
+        modelos_serializados_base64 = Utilidades.serializar(modelos)
         self.nome_banco = os.environ.get("NOME_BANCO")
         self.executar_sql(f"INSERT INTO busca_api (comando, retorno_serializado) VALUES (%s, %s);", ('GoogleApiWrapper().getModels()', modelos_serializados_base64,))
         
     def salvar_modelo(self, modelo, id_registro_request: int):
+        self.nome_banco = os.environ.get("NOME_BANCO")
         self.executar_sql("INSERT INTO modelos (name, busca_id) VALUES (%s, %s)", (modelo.name, id_registro_request))
 
     def registrar_metadados_modelo(self, modelo, id_modelo):
@@ -81,6 +85,10 @@ class Banco:
             if is_list:
                 for entry in value:
                     self.executar_sql("INSERT INTO modelos_meta_dados (campo, tipo_valor, valor, modelo_id) VALUES (%s, %s, %s, %s);", (property, value_type, entry, id_modelo))
+
+    def registrar_pergunta(self, pergunta):
+        self.nome_banco = os.environ.get("NOME_BANCO")
+        self.executar_sql("INSERT INTO perguntas (pergunta) VALUES (%s)", (pergunta, ))
                     
     def _loginfo(self, mensagem):
         if self._logger:

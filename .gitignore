@@ -1,8 +1,7 @@
 .env
 app/__pycache__/*
 app/__pycache__/app.cpython-311.pyc
-app/suporte/__pycache__/banco.cpython-311.pyc
-app/suporte/__pycache__/funcoes_banco.cpython-311.pyc
 app/__pycache__/GoogleApiWrapper.cpython-311.pyc
 app/google_api/__pycache__/getLLM.cpython-311.pyc
-app/suporte/__pycache__/Banco.cpython-311.pyc
+app/google_api/__pycache__/GoogleApiWrapper.cpython-311.pyc
+app/suporte/__pycache__/*

@@ -21,6 +21,8 @@ class Migrar:
         banco.executar_sql(self._converter_arquivo_sql_para_string("scripts_migracao/01_tabela_busca_api.sql"))
         banco.executar_sql(self._converter_arquivo_sql_para_string("scripts_migracao/02_tabela_modelos.sql"))
         banco.executar_sql(self._converter_arquivo_sql_para_string("scripts_migracao/03_tabela_propriedades_modelos.sql"))
+        banco.executar_sql(self._converter_arquivo_sql_para_string("scripts_migracao/04_tabela_perguntas.sql"))
+        banco.executar_sql(self._converter_arquivo_sql_para_string("scripts_migracao/05_tabela_respostas.sql"))
         self._loginfo("Migração do banco terminada.")
     
     def _converter_arquivo_sql_para_string(self, arquivo: str):

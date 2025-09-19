@@ -1,3 +1,5 @@
 #!/bin/bash
 
-python3 comando.py --comando ${@}
+if [ $# -gt 0 ]; then
+    python3 comando.py --comando ${@}
+fi

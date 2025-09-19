@@ -1,5 +1,5 @@
 from suporte.Banco import Banco
-from GoogleApiWrapper import GoogleApiWrapper
+from google_api.GoogleApiWrapper import GoogleApiWrapper
 from suporte.SupportFactory import SupportFactory
 
 logger = SupportFactory.getLogger()

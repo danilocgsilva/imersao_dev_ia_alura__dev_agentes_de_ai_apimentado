@@ -1,5 +1,6 @@
 import logging
 import uuid
+import os
 
 class SupportFactory:
     @staticmethod
@@ -18,4 +19,8 @@ class SupportFactory:
         file_handler.setFormatter(formatter)
 
         return logger
+    
+    @staticmethod
+    def buscar_chave_google() -> str:
+        return os.environ.get("CHAVE_API_GOOGLE")
     
