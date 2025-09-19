@@ -7,7 +7,14 @@ class Perguntar:
         self._banco = banco
         self._gaw = gaw
     
-    def perguntar(self, pergunta: str):
+    def perguntar(self, pergunta: str) -> str:
+        resposta_gaw = self._gaw.buscar_resposta(pergunta)
+        resposta = resposta_gaw["resposta"]
+        resposta_str = resposta.content
+        
         self._banco.registrar_pergunta(pergunta)
-        resposta = self._gaw.buscar_resposta(pergunta)
-        return resposta["resposta"].content
+        id_pergunta = self._banco.ultimo_id_inserido
+        self._banco.registrar_resposta(resposta_str, id_pergunta, resposta)
+        self._banco.registrar_request(resposta, resposta_gaw["comando"])
+        
+        return resposta_str

@@ -22,6 +22,6 @@ class GoogleApiWrapper:
         llm = self.getLLM()
         return {
             "resposta": llm.invoke(pergunta),
-            "comando": f"ChatGoogleGenerativeAI().invoke({pergunta})"
+            "comando": "ChatGoogleGenerativeAI().invoke(<pergunta>)"
         }
         

@@ -4,6 +4,7 @@ from suporte.Comandos.LimparBanco import LimparBanco
 from suporte.Comandos.Migrar import Migrar
 from suporte.Comandos.RegistrarModelosDisponiveis import RegistrarModelosDisponiveis
 from suporte.Comandos.Perguntar import Perguntar
+from suporte.Comandos.RenovarBanco import RenovarBanco
 import re
 
 def clean_filename(filename):
@@ -56,6 +57,10 @@ def main():
             
         if args.comando == "registrar_modelos_disponiveis":
             comando = RegistrarModelosDisponiveis()
+            comando.executar()
+            
+        if args.comando == "renovar_banco":
+            comando = RenovarBanco()
             comando.executar()
             
         if args.comando == "perguntar":

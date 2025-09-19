@@ -18,11 +18,8 @@ class Perguntar:
             raise Exception("A pergunta não foi feita. Use o método **set_pergunta** de **Comandos.Perguntar**")
         self._loginfo(f"Executando a pergunta: {self._pergunta}")
         print(f"Pergunta: {self._pergunta}")
-        
         banco = Banco(self._logger)
-        
         perguntar_app = PerguntarApp(self._logger, banco, self._gaw)
-        
         self._resposta = perguntar_app.perguntar(self._pergunta)
         
     def get_resposta(self) -> str:

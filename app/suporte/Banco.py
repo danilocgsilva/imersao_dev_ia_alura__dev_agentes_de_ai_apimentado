@@ -62,9 +62,14 @@ class Banco:
             loop_modelos += 1
             
     def registrar_request_de_busca_modelos_disponiveis(self, modelos):
-        modelos_serializados_base64 = Utilidades.serializar(modelos)
         self.nome_banco = os.environ.get("NOME_BANCO")
+        modelos_serializados_base64 = Utilidades.serializar(modelos)
         self.executar_sql(f"INSERT INTO busca_api (comando, retorno_serializado) VALUES (%s, %s);", ('GoogleApiWrapper().getModels()', modelos_serializados_base64,))
+        
+    def registrar_request(self, conteudo, comando):
+        self.nome_banco = os.environ.get("NOME_BANCO")
+        conteudo_serializado = Utilidades.serializar(conteudo)
+        self.executar_sql(f"INSERT INTO busca_api (comando, retorno_serializado) VALUES (%s, %s);", (comando, conteudo_serializado,))
         
     def salvar_modelo(self, modelo, id_registro_request: int):
         self.nome_banco = os.environ.get("NOME_BANCO")
@@ -89,6 +94,11 @@ class Banco:
     def registrar_pergunta(self, pergunta):
         self.nome_banco = os.environ.get("NOME_BANCO")
         self.executar_sql("INSERT INTO perguntas (pergunta) VALUES (%s)", (pergunta, ))
+        
+    def registrar_resposta(self, resposta: str, id_pergunta: int, resposta_cheia):
+        self.nome_banco = os.environ.get("NOME_BANCO")
+        resposta_serializada = Utilidades.serializar(resposta_cheia)
+        self.executar_sql("INSERT INTO respostas (resposta, pergunta_id, resposta_api_total) VALUES (%s, %s, %s)", (resposta, id_pergunta, resposta_serializada, ))
                     
     def _loginfo(self, mensagem):
         if self._logger:
