@@ -44,6 +44,12 @@ def main():
         required=False,
         default=""
     )
+    parser.add_argument(
+        '--temperatura', 
+        help='A temperatura do modelo para responder. Quanto menor, menos criativo e determinístico. Quanto maior, mais criativo e imprevisível.',
+        required=False,
+        default=0.1
+    )
     args = parser.parse_args()
     
     if args.comando in dict_pares_comando_classe or args.comando == "ajuda":
@@ -69,6 +75,7 @@ def main():
             else:
                 perguntar = Perguntar()
                 perguntar.set_pergunta(args.pergunta)
+                perguntar.set_temperatura(args.temperatura)
                 perguntar.executar()
                 resposta = perguntar.get_resposta()
                 print(resposta)

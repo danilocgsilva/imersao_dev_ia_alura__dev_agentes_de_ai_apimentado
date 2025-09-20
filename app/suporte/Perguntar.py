@@ -7,8 +7,8 @@ class Perguntar:
         self._banco = banco
         self._gaw = gaw
     
-    def perguntar(self, pergunta: str) -> str:
-        resposta_gaw = self._gaw.buscar_resposta(pergunta)
+    def perguntar(self, pergunta: str, temperatura: float = 0.1) -> str:
+        resposta_gaw = self._gaw.buscar_resposta(pergunta, temperatura)
         resposta = resposta_gaw["resposta"]
         resposta_str = resposta.content
         

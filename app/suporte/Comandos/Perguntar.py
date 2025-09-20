@@ -9,9 +9,13 @@ class Perguntar:
         self._gaw = GoogleApiWrapper(SupportFactory.buscar_chave_google())
         self._resposta = ""
         self._pergunta = ""
+        self._temperatura = 0.1
         
     def set_pergunta(self, pergunta: str):
         self._pergunta = pergunta
+        
+    def set_temperatura(self, temperatura: float):
+        self._temperatura = temperatura
         
     def executar(self):
         if self._pergunta == "":
@@ -20,7 +24,7 @@ class Perguntar:
         print(f"Pergunta: {self._pergunta}")
         banco = Banco(self._logger)
         perguntar_app = PerguntarApp(self._logger, banco, self._gaw)
-        self._resposta = perguntar_app.perguntar(self._pergunta)
+        self._resposta = perguntar_app.perguntar(self._pergunta, self._temperatura)
         
     def get_resposta(self) -> str:
         return self._resposta
