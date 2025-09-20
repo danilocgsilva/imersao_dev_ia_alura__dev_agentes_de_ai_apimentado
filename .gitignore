@@ -3,3 +3,4 @@ app/__pycache__/*
 app/google_api/__pycache__/*
 app/suporte/__pycache__/*
 app/suporte/Comandos/__pycache__/*
+app/app.log

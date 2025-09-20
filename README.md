@@ -2,6 +2,7 @@
 
 * [Carta de intenções](#carta-de-intenções)
 * [Subindo ambiente](#subindo-o-ambiente)
+* [Recursos](#recursos)
 
 ## Carta de intenções
 
@@ -57,3 +58,63 @@ Execute o seguinte comando:
 ```
 docker compose up -d --build
 ```
+
+Depois, será necessário construir migrar o banco de dados. Execute:
+
+```
+docker exec -it imersao_alura_agentes_ia_ambiente python3 comando.py --comando migrar
+```
+
+Ou, pode entrar no container e o comando é mais simples:
+```
+python3 comando.py --comando migrar
+```
+
+### Variáveis de ambiente
+
+É importante copiar o arquivo `.env.exemplo` para um outro arquivo chamado `.env`, substituindo as informações necessárias. Destaque para a variável `CHAVE_API_GOOGLE`, que é preciso ser gerada no Google, caso contrário não será possível acessar a api do Google.
+
+### Log
+
+Por padrão, a aplicação mantém um arquivo na raiz chamado `app.log`. As atividades realizadas costuma escrever nesse arquivo para permitir o monitoramento.
+
+## Recursos
+
+### Comandos
+
+Algumas ações são possíveis a partir de comandos que podem ser executados pelo terminal.
+
+Para executar um comando fora do container, execute o seguinte:
+
+```
+docker exec -it imersao_alura_agentes_ia_ambiente python3 comando.py --comando <o_seu_comando>
+```
+
+Dentro do container, os comandos podem ser executados da seguinte forma:
+```
+python3 comando.py --comando <o_seu_comando>
+```
+
+**Listando os comandos disponíveis**
+
+```
+docker exec -it imersao_alura_agentes_ia_ambiente python3 comando.py --comando ajuda
+```
+
+E uma lista de comandos possíveis será aprensentado.
+
+**Fazendo uma pergunta**
+
+```
+docker exec -it imersao_alura_agentes_ia_ambiente python3 comando.py --comando perguntar --pergunta "Qual a capital da França?"
+```
+
+**Verificando os modelos disponíveis pelo Google**
+
+```
+docker exec -it imersao_alura_agentes_ia_ambiente python3 comando.py --comando registrar_modelos_disponiveis
+```
+
+Este comando aciona a api do Google para listar os modelos disponíveis e salva no banco de dados relacional na tabela `modelos`, e detalhes dos modelos ficam armazenados na tabela `modelos_meta_dados`.
+
+
