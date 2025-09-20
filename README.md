@@ -54,6 +54,12 @@ Ferramentas como Chats de outros providers (Deepseek e ChatGPT) já estão muito
 
 ## Subindo o ambiente
 
+### Variáveis de ambiente
+
+É importante copiar o arquivo `.env.exemplo` para um outro arquivo chamado `.env`, substituindo as informações necessárias. Destaque para a variável `CHAVE_API_GOOGLE`, que é preciso ser gerada no Google, caso contrário não será possível acessar a api do Google.
+
+### Compilando o ambiente
+
 Execute o seguinte comando:
 ```
 docker compose up -d --build
@@ -69,10 +75,6 @@ Ou, pode entrar no container e o comando é mais simples:
 ```
 python3 comando.py --comando migrar
 ```
-
-### Variáveis de ambiente
-
-É importante copiar o arquivo `.env.exemplo` para um outro arquivo chamado `.env`, substituindo as informações necessárias. Destaque para a variável `CHAVE_API_GOOGLE`, que é preciso ser gerada no Google, caso contrário não será possível acessar a api do Google.
 
 ### Log
 

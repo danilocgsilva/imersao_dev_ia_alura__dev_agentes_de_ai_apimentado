@@ -7,3 +7,6 @@ flask
 # bibliotecas para se conectar com o Google
 langchain_google_genai
 google-generativeai
+
+# Aplicação web
+flask

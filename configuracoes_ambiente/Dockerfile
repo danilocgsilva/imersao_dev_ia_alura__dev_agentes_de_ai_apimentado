@@ -16,5 +16,7 @@ RUN apt-get install -y nodejs
 
 COPY instalar_dependencias_e_manter.sh /instalar_dependencias_e_manter.sh
 RUN chmod +x /instalar_dependencias_e_manter.sh
+COPY iniciar_flask.sh /iniciar_flask.sh
+RUN chmod +x /iniciar_flask.sh
 
 CMD /instalar_dependencias_e_manter.sh
