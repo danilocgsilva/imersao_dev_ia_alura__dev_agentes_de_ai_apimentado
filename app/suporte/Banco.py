@@ -95,10 +95,17 @@ class Banco:
         self.nome_banco = os.environ.get("NOME_BANCO")
         self.executar_sql("INSERT INTO perguntas (pergunta) VALUES (%s)", (pergunta, ))
         
-    def registrar_resposta(self, resposta: str, id_pergunta: int, resposta_cheia):
+    def registrar_resposta(
+        self, 
+        resposta: str,
+        id_pergunta: int,
+        resposta_cheia,
+        temperatura: int,
+        modelo_utilizado: str
+    ):
         self.nome_banco = os.environ.get("NOME_BANCO")
         resposta_serializada = Utilidades.serializar(resposta_cheia)
-        self.executar_sql("INSERT INTO respostas (resposta, pergunta_id, resposta_api_total) VALUES (%s, %s, %s)", (resposta, id_pergunta, resposta_serializada, ))
+        self.executar_sql("INSERT INTO respostas (resposta, pergunta_id, resposta_api_total, temperatura, modelo_utilizado) VALUES (%s, %s, %s, %s, %s)", (resposta, id_pergunta, resposta_serializada, temperatura, modelo_utilizado, ))
                     
     def _loginfo(self, mensagem):
         if self._logger:

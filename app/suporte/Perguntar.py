@@ -14,7 +14,7 @@ class Perguntar:
         
         self._banco.registrar_pergunta(pergunta)
         id_pergunta = self._banco.ultimo_id_inserido
-        self._banco.registrar_resposta(resposta_str, id_pergunta, resposta)
+        self._banco.registrar_resposta(resposta_str, id_pergunta, resposta, resposta_gaw["temperatura"], resposta_gaw["modelo_utilizado"])
         self._banco.registrar_request(resposta, resposta_gaw["comando"])
         
         return resposta_str

@@ -10,18 +10,20 @@ class GoogleApiWrapper:
         response = genai.list_models()
         return list(response)
     
-    def getLLM(self, temperatura: float = 0.1) -> ChatGoogleGenerativeAI:
+    def getLLM(self, temperatura: float = 0.1, modelo: str = "gemini-2.5-flash") -> ChatGoogleGenerativeAI:
         llm = ChatGoogleGenerativeAI(
-            model="gemini-2.5-flash", 
+            model=modelo, 
             google_api_key=self._chave_google,
             temperature=temperatura
         )
         return llm
     
-    def buscar_resposta(self, pergunta: str, temperatura: float = 0.1):
+    def buscar_resposta(self, pergunta: str, temperatura: float = 0.1, modelo: str = "gemini-2.5-flash"):
         llm = self.getLLM(temperatura)
         return {
             "resposta": llm.invoke(pergunta),
+            "temperatura": temperatura,
+            "modelo_utilizado": modelo,
             "comando": "ChatGoogleGenerativeAI().invoke(<pergunta>)"
         }
         
