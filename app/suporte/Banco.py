@@ -1,6 +1,7 @@
 import mysql.connector
 import os
-from suporte.Utilidades import Utilidades
+from .Utilidades import Utilidades
+from .SupportFactory import SupportFactory
 
 class Banco:
     def __init__(self, logger = None):
@@ -73,7 +74,12 @@ class Banco:
         
     def salvar_modelo(self, modelo, id_registro_request: int):
         self.nome_banco = os.environ.get("NOME_BANCO")
-        self.executar_sql("INSERT INTO modelos (name, busca_id) VALUES (%s, %s)", (modelo.name, id_registro_request))
+        self.executar_sql("INSERT INTO modelos (nome, ordem, busca_id) VALUES (%s, %s, %s)", (modelo.name, 1, id_registro_request))
+        
+    def listar_modelos_disponiveis(self):
+        self.nome_banco = os.environ.get("NOME_BANCO")
+        modelos_disponiveis = self.executar_sql("SELECT id, nome, ordem, busca_id FROM modelos ORDER BY ordem ASC, nome ASC;")
+        return modelos_disponiveis
 
     def registrar_metadados_modelo(self, modelo, id_modelo):
         for property in dir(modelo):
