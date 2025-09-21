@@ -68,17 +68,33 @@ docker compose up -d --build
 Depois, será necessário construir migrar o banco de dados. Execute:
 
 ```
-docker exec -it imersao_alura_agentes_ia_ambiente python3 comando.py --comando migrar
+docker exec -it imersao_alura_agentes_ia_ambiente python3 -m comando --comando migrar
 ```
 
 Ou, pode entrar no container e o comando é mais simples:
 ```
-python3 comando.py --comando migrar
+python3 -m comando --comando migrar
 ```
 
 ### Log
 
 Por padrão, a aplicação mantém um arquivo na raiz chamado `app.log`. As atividades realizadas costuma escrever nesse arquivo para permitir o monitoramento.
+
+### Aplicação web
+
+Os recursos de IA também estão disponíveis através de uma aplicação web. Existe o script `iniciar_flask.sh`, que pode ser iniciado dentro do container, servido uma aplicação web na porta 5000.
+
+Entre no container e execute:
+
+```
+/iniciar_flask.sh
+```
+
+E então será possível acessar a aplicação web no seguinte endereço:
+
+```
+http://localhost:5000
+```
 
 ## Recursos
 
