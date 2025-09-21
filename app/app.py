@@ -19,7 +19,11 @@ def perguntar():
     temperatura = request.get_json().get('temperatura')
     pergunta = request.get_json().get('pergunta')
     
-    perguntar = Perguntar(SupportFactory.getLogger(), Banco(), GoogleApiWrapper(SupportFactory.buscar_chave_google()))
+    perguntar = Perguntar(
+        SupportFactory.getLogger(), 
+        Banco(), 
+        GoogleApiWrapper(SupportFactory.buscar_chave_google())
+    )
     resposta = perguntar.perguntar(pergunta, float(temperatura), modelo)
     
     return {
