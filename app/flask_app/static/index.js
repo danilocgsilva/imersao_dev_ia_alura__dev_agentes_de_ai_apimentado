@@ -20,6 +20,20 @@ function liberar_formulario() {
     }
 }
 
+function montar_pergunta(pergunta, historico) {
+    let conteudo_llm = "";
+    if (historico.length > 0) {
+        for (let i = 0; i < historico.length; i++) {
+            conteudo_llm += `Pergunta: ${historico[i]["pergunta"]}\n`;
+            conteudo_llm += `Resposta: ${historico[i]["resposta"]}\n`;
+        }
+        conteudo_llm += `Pergunta: ${pergunta}\n`;
+    } else {
+        conteudo_llm = pergunta;
+    }
+    return conteudo_llm;
+}
+
 const animacao_espera = {
     contador: 0,
     id_intervalo: null,
@@ -61,6 +75,7 @@ document.getElementById('menu-toggle').addEventListener('click', function () {
     mobileMenu.classList.toggle('hidden');
 })
 
+const historico = [];
 document.getElementById('formulario').addEventListener('submit', async function (e) {
     e.preventDefault();
     travar_formulario();
@@ -83,16 +98,18 @@ document.getElementById('formulario').addEventListener('submit', async function 
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ modelo, temperatura, pergunta })
+            body: JSON.stringify({
+                modelo, 
+                temperatura, 
+                pergunta: montar_pergunta(pergunta, historico) 
+            })
         });
         
         const data = await response.json();
-
         animacao_espera.stop();
-
         texto_resposta = data.resposta;
-
         resultados.innerHTML = texto_resposta;
+        historico.push({ pergunta, resposta: texto_resposta });
     } catch (error) {
         console.error('Error:', error);
         alert('Ocorreu um erro ao enviar o formulário.');
