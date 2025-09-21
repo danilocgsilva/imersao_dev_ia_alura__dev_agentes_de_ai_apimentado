@@ -10,3 +10,6 @@ google-generativeai
 
 # Aplicação web
 flask
+
+# Conversão de markdown para html
+markdown

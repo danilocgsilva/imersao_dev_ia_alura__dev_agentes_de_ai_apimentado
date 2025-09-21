@@ -101,7 +101,8 @@ document.getElementById('formulario').addEventListener('submit', async function 
             body: JSON.stringify({
                 modelo, 
                 temperatura, 
-                pergunta: montar_pergunta(pergunta, historico) 
+                pergunta: montar_pergunta(pergunta, historico),
+                formato: "html"
             })
         });
         

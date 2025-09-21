@@ -86,6 +86,8 @@ langchain-google-genai==2.0.10
     # via -r project.in
 langsmith==0.4.28
     # via langchain-core
+markdown==3.9
+    # via -r project.in
 markupsafe==3.0.2
     # via
     #   flask
