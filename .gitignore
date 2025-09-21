@@ -5,3 +5,7 @@ app/suporte/__pycache__/*
 app/suporte/Comandos/__pycache__/*
 app/app.log
 app/template_models/__pycache__/*
+app/app/__pycache__/*
+app/flask_app/__pycache__/*
+app/flask_app/template_models/__pycache__/*
+app/web_framework/__pycache__/*

@@ -1,5 +1,5 @@
-from .Banco import Banco
-from ..google_api.GoogleApiWrapper import GoogleApiWrapper
+from suporte.Banco import Banco
+from google_api.GoogleApiWrapper import GoogleApiWrapper
 
 class Perguntar:
     def __init__(self, logger, banco: Banco, gaw: GoogleApiWrapper):

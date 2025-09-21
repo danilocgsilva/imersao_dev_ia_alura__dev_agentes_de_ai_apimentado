@@ -7,7 +7,10 @@ class Banco:
     def __init__(self, logger = None):
         self._nome_banco = None
         self._ultimo_id_inserido_banco = None
-        self._logger = logger
+        if logger == None:
+            self._logger = SupportFactory.getLogger()
+        else:
+            self._logger = logger
     
     @property
     def nome_banco(self):

@@ -1,5 +1,5 @@
-from ..suporte.Banco import Banco
-from ..suporte.SupportFactory import SupportFactory
+from app.suporte.Banco import Banco
+from app.suporte.SupportFactory import SupportFactory
 
 class Index:
     def __init__(self):
@@ -29,4 +29,6 @@ class Index:
     def _buscar_modelos(self):
         banco = Banco()
         modelos = banco.listar_modelos_disponiveis()
+        if modelos == None:
+            return []
         return modelos

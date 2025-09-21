@@ -1,19 +1,19 @@
 from flask import Flask, Blueprint, render_template, request
-from .template_models.Index import Index
-from .suporte.Perguntar import Perguntar
-from .suporte.SupportFactory import SupportFactory
-from .suporte.Banco import Banco
-from .google_api.GoogleApiWrapper import GoogleApiWrapper
+from flask_app.template_models.Index import Index
+from app.suporte.Perguntar import Perguntar
+from suporte.SupportFactory import SupportFactory
+from suporte.Banco import Banco
+from google_api.GoogleApiWrapper import GoogleApiWrapper
 
-app = Flask(__name__)
+web_framework = Flask(__name__)
 route = Blueprint('route', __name__)
-app.register_blueprint(route)
+web_framework.register_blueprint(route)
 
-@app.route("/", endpoint="index", methods=['GET'])
+@web_framework.route("/", endpoint="index", methods=['GET'])
 def index():
     return render_template("index.html", view_model=Index())
 
-@app.route('/perguntar', endpoint="perguntar", methods=['POST'])
+@web_framework.route('/perguntar', endpoint="perguntar", methods=['POST'])
 def perguntar():
     modelo = request.get_json().get('modelo')
     temperatura = request.get_json().get('temperatura')
