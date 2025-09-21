@@ -12,9 +12,20 @@ class Perguntar:
         resposta = resposta_gaw["resposta"]
         resposta_str = resposta.content
         
+        print(resposta_gaw)
+        
         self._banco.registrar_pergunta(pergunta)
         id_pergunta = self._banco.ultimo_id_inserido
-        self._banco.registrar_resposta(resposta_str, id_pergunta, resposta, resposta_gaw["temperatura"], resposta_gaw["modelo_utilizado"])
+        self._banco.registrar_resposta(
+            resposta_str, 
+            id_pergunta, 
+            resposta, 
+            resposta_gaw["temperatura"], 
+            resposta_gaw["modelo_utilizado"],
+            resposta_gaw["timestamp_antes"],
+            resposta_gaw["timestamp_depois"],
+            resposta_gaw["diferenca_ms"],
+        )
         self._banco.registrar_request(resposta, resposta_gaw["comando"])
         
         return resposta_str

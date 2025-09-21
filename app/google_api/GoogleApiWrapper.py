@@ -1,5 +1,6 @@
 import google.generativeai as genai
 from langchain_google_genai import ChatGoogleGenerativeAI
+import time
         
 class GoogleApiWrapper:
     def __init__(self, chave_google):
@@ -20,10 +21,19 @@ class GoogleApiWrapper:
     
     def buscar_resposta(self, pergunta: str, temperatura: float = 0.1, modelo: str = "gemini-2.5-flash"):
         llm = self.getLLM(temperatura)
+        
+        timestamp_antes = time.time_ns()
+        resposta = llm.invoke(pergunta)
+        timestamp_depois = time.time_ns()
+        diferenca_ms = (timestamp_depois - timestamp_antes) / 1_000_000
+
         return {
-            "resposta": llm.invoke(pergunta),
+            "resposta": resposta,
             "temperatura": temperatura,
             "modelo_utilizado": modelo,
-            "comando": "ChatGoogleGenerativeAI().invoke(<pergunta>)"
+            "comando": "ChatGoogleGenerativeAI().invoke(<pergunta>)",
+            "timestamp_antes": timestamp_antes / 1000000,
+            "timestamp_depois": timestamp_depois / 1000000,
+            "diferenca_ms": diferenca_ms
         }
         
