@@ -10,4 +10,4 @@ CREATE TABLE respostas(
     resposta_api_total TEXT NOT NULL,
     pergunta_id INT NOT NULL,
     FOREIGN KEY (pergunta_id) REFERENCES perguntas(id)
-)
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

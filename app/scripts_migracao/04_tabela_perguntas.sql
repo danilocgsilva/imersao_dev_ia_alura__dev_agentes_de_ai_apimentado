@@ -2,4 +2,4 @@ CREATE TABLE perguntas(
     id INT AUTO_INCREMENT PRIMARY KEY,
     data_da_pergunta TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     pergunta TEXT NOT NULL
-)
+) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
