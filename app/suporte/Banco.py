@@ -82,7 +82,16 @@ class Banco:
     def listar_modelos_disponiveis(self):
         self.nome_banco = os.environ.get("NOME_BANCO")
         modelos_disponiveis = self.executar_sql("SELECT id, nome, ordem, busca_id FROM modelos ORDER BY ordem ASC, nome ASC;")
+        if modelos_disponiveis == None:
+            return []
         return modelos_disponiveis
+    
+    def listar_perguntas_modelo(self):
+        self.nome_banco = os.environ.get("NOME_BANCO")
+        perguntas_modelo = self.executar_sql("SELECT id, pergunta FROM perguntas_modelo ORDER BY id DESC;")
+        if perguntas_modelo == None:
+            return []
+        return perguntas_modelo
     
     def alterar_ordem_modelo(self, nome_model: str, ordem: int):
         self.nome_banco = os.environ.get("NOME_BANCO")

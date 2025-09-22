@@ -9,6 +9,7 @@ class Prompt:
         self._lista_modelos = self._buscar_modelos()
         self._nome_pagina = "prompt"
         self._nome_pagina_amigavel = "Prompt"
+        self._lista_perguntas_modelo = self._busca_perguntas_modelo()
         
     @property
     def titulo_pagina(self):
@@ -35,6 +36,10 @@ class Prompt:
         return self._nome_pagina_amigavel
     
     @property
+    def perguntas_modelo(self):
+        return self._lista_perguntas_modelo
+    
+    @property
     def prompt(self):
         prompt = """
 Você é um triador de Service Desk para políticas internas da empresa Carraro Desenvolvimento. 
@@ -55,6 +60,14 @@ Analise a mensagem e decida a ação mais apropriada.
     def _buscar_modelos(self):
         banco = Banco()
         modelos = banco.listar_modelos_disponiveis()
+        
         if modelos == None:
             return []
         return modelos
+    
+    def _busca_perguntas_modelo(self):
+        banco = Banco()
+        perguntas = banco.listar_perguntas_modelo()
+        if perguntas == None:
+            return []
+        return perguntas
