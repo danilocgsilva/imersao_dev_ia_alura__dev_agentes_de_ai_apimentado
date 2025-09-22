@@ -19,12 +19,15 @@ class Prompt:
     
     def triagemJson(self, mensagem_humana: str):
         resultados = self.triagem(mensagem_humana)
-        resultadosJson = json.dumps(resultados, indent=4)
-        return resultadosJson
+        resultadosJson = json.dumps(resultados, indent=10)
+        return self.newlineParaBr(resultadosJson)
     
     def get_triagem_chain(self):
         gaw = GoogleApiWrapper(SupportFactory.buscar_chave_google())
         llm_triagem = gaw.getLLM()
         triagem_chain = llm_triagem.with_structured_output(TriagemOut)
         return triagem_chain
+    
+    def newlineParaBr(self, conteudo: str):
+        return conteudo.replace('\n', '<br>')        
     
