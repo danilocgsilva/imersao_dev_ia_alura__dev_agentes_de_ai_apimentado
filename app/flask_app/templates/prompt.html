@@ -41,12 +41,12 @@
 
                 <div class="mt-4">
                     <label class="block text-sm font-medium text-gray-700 mb-1" for="perguntas_modelo">
-                        Perguntas_modelo
+                        Perguntas Modelo
                     </label>
                         <div class="relative">
                         <select
                             id="perguntas_modelo"
-                            name="perguntas_modelo"
+                            name="pergunta"
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition">
                             {% for pergunta_modelo in view_model.perguntas_modelo %}
                                 <option value="{{ pergunta_modelo[1] }}">{{ pergunta_modelo[1] }}</option>
@@ -55,7 +55,20 @@
                     </div>
                 </div>
 
+                <div class="pt-4">
+                    <button type="submit" class="w-full bg-blue-600 text-white font-medium py-3 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition">
+                        Perguntar
+                    </button>
+                </div>
+
             </form>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Resultado</h2>
+            <div id="results" class="min-h-[200px] border border-gray-200 rounded-lg p-4 text-gray-600 font-mono">
+                <p class="text-center text-gray-500 py-8">Resultados</p>
+            </div>
         </div>
     </div>
 {% endblock %}

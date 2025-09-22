@@ -39,9 +39,7 @@ const animacao_espera = {
     id_intervalo: null,
     
     start: function() {
-
         resultados.style.fontSize = "200%";
-        
 
         this.contador = 0;
         let innerHtmlConteudo = "Respondendo.";
@@ -60,7 +58,6 @@ const animacao_espera = {
     },
     
     stop: function() {
-
         resultados.style.fontSize = null;
 
         if (this.id_intervalo) {
@@ -76,7 +73,8 @@ document.getElementById('menu-toggle').addEventListener('click', function () {
 })
 
 const historico = [];
-document.getElementById('formulario').addEventListener('submit', async function (e) {
+
+formulario.addEventListener('submit', async function (e) {
     e.preventDefault();
     travar_formulario();
 

@@ -88,7 +88,7 @@ class Banco:
     
     def listar_perguntas_modelo(self):
         self.nome_banco = os.environ.get("NOME_BANCO")
-        perguntas_modelo = self.executar_sql("SELECT id, pergunta FROM perguntas_modelo ORDER BY id DESC;")
+        perguntas_modelo = self.executar_sql("SELECT id, pergunta FROM perguntas_modelo ORDER BY id ASC;")
         if perguntas_modelo == None:
             return []
         return perguntas_modelo
