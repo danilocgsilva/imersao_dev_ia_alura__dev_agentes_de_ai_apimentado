@@ -93,7 +93,7 @@ document.getElementById('formulario').addEventListener('submit', async function 
         let texto_resposta = "";
         animacao_espera.start();
 
-        const response = await fetch('/perguntar', {
+        const response = await fetch('/enviar_pergunta', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

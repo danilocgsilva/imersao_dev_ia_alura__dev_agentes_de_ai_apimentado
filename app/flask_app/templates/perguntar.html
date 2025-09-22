@@ -1,43 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ view_model.titulo_pagina }}</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script defer src="{{ url_for('static', filename='index.js') }}"></script>
-</head>
-<body class="bg-gray-50 min-h-screen">
-    <!-- Responsive Navigation -->
-    <nav class="bg-blue-600 text-white shadow-lg">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="flex justify-between items-center py-4">
-                <a href="#" class="text-xl font-bold">{{ view_model.nome_app }}</a>
-                
-                <div class="md:hidden">
-                    <button id="menu-toggle" class="focus:outline-none">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
-                        </svg>
-                    </button>
-                </div>
-                
-                <div class="hidden md:flex space-x-6">
-                    <a href="#" class="hover:text-blue-200 transition">Home</a>
-                    <a href="#" class="hover:text-blue-200 transition">Features</a>
-                    <a href="#" class="hover:text-blue-200 transition">About</a>
-                    <a href="#" class="hover:text-blue-200 transition">Contact</a>
-                </div>
-            </div>
-            
-            <div id="mobile-menu" class="hidden pb-4 md:hidden">
-                <a href="#" class="block py-2 hover:bg-blue-500 px-4 rounded transition">Home</a>
-                <a href="#" class="block py-2 hover:bg-blue-500 px-4 rounded transition">Features</a>
-                <a href="#" class="block py-2 hover:bg-blue-500 px-4 rounded transition">About</a>
-                <a href="#" class="block py-2 hover:bg-blue-500 px-4 rounded transition">Contact</a>
-            </div>
-        </div>
-    </nav>
+{% extends "_base.html" %}
+
+{% block content %}
 
     <div class="max-w-4xl mx-auto px-4 py-8">
         <h1 class="text-3xl font-bold text-center text-gray-800 mb-8">{{ view_model.h1 }}</h1>
@@ -109,5 +72,4 @@
             </div>
         </div>
     </div>
-</body>
-</html>
+{% endblock %}

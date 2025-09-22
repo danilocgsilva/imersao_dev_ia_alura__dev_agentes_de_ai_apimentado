@@ -1,5 +1,5 @@
-from app.suporte.Banco import Banco
-from app.suporte.SupportFactory import SupportFactory
+from suporte.Banco import Banco
+from suporte.SupportFactory import SupportFactory
 
 class Index:
     def __init__(self):
@@ -7,6 +7,8 @@ class Index:
         self._nome_app = "Faça uma pergunta"
         self._h1 = "Faça uma pergunta para a IA"
         self._lista_modelos = self._buscar_modelos()
+        self._nome_pagina = "perguntar"
+        self._nome_pagina_amigavel = "Faça uma pergunta"
         
     @property
     def titulo_pagina(self):
@@ -22,9 +24,15 @@ class Index:
     
     @property
     def lista_modelos(self):
-        # logger = SupportFactory.getLogger()
-        # logger.info(self._lista_modelos)
         return self._lista_modelos
+    
+    @property
+    def nome_pagina(self):
+        return self._nome_pagina
+    
+    @property
+    def nome_pagina_amigavel(self):
+        return self._nome_pagina_amigavel
     
     def _buscar_modelos(self):
         banco = Banco()

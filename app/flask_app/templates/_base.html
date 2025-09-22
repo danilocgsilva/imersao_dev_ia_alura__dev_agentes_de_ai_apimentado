@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ view_model.titulo_pagina }}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="{{ url_for('static', filename=view_model.nome_pagina) ~ '.js' }}"></script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    
+    <nav class="bg-blue-600 text-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <a href="#" class="text-xl font-bold">{{ view_model.nome_pagina_amigavel }}</a>
+                
+                <div class="md:hidden">
+                    <button id="menu-toggle" class="focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                        </svg>
+                    </button>
+                </div>
+                
+                <div class="hidden md:flex space-x-6">
+                    <a href="{{ url_for('perguntar') }}" class="hover:text-blue-200 transition">Faça uma pergunta</a>
+                    <a href="{{ url_for('prompt') }}" class="hover:text-blue-200 transition">Prompt</a>
+                    <a href="#" class="hover:text-blue-200 transition">About</a>
+                    <a href="#" class="hover:text-blue-200 transition">Contact</a>
+                </div>
+            </div>
+            
+            <div id="mobile-menu" class="hidden pb-4 md:hidden">
+                <a href="{{ url_for('perguntar') }}" class="block py-2 hover:bg-blue-500 px-4 rounded transition">Faça uma pergunta</a>
+                <a href="{{ url_for('prompt') }}" class="block py-2 hover:bg-blue-500 px-4 rounded transition">Prompt</a>
+                <a href="#" class="block py-2 hover:bg-blue-500 px-4 rounded transition">About</a>
+                <a href="#" class="block py-2 hover:bg-blue-500 px-4 rounded transition">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    {% block content %}{% endblock %}
+
+</body>
+</html>
