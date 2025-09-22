@@ -32,4 +32,3 @@ class Perguntar:
     def _loginfo(self, mensagem):
         if self._logger:
             self._logger.info(mensagem)
-    

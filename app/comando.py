@@ -5,6 +5,7 @@ from suporte.Comandos.Migrar import Migrar
 from suporte.Comandos.RegistrarModelosDisponiveis import RegistrarModelosDisponiveis
 from suporte.Comandos.Perguntar import Perguntar
 from suporte.Comandos.RenovarBanco import RenovarBanco
+from suporte.Comandos.AlterarOrdemModelo import AlterarOrdemModelo
 import re
 
 def clean_filename(filename):
@@ -50,6 +51,18 @@ def main():
         required=False,
         default=0.1
     )
+    parser.add_argument(
+        '--ordem', 
+        help='A ordem para ser assimilada ao modelo',
+        required=False,
+        default=""
+    )
+    parser.add_argument(
+        '--modelo', 
+        help='O nome do modelo',
+        required=False,
+        default=""
+    )
     args = parser.parse_args()
     
     if args.comando in dict_pares_comando_classe or args.comando == "ajuda":
@@ -79,6 +92,15 @@ def main():
                 perguntar.executar()
                 resposta = perguntar.get_resposta()
                 print(resposta)
+                
+        if args.comando == "alterar_ordem_modelo":
+            if args.modelo == "" or args.ordem == "":
+                print("O comando para alterar a ordem do modelo requer dois parâmetros, que são --modelo e --ordem")
+            else:
+                alterarOrdemModelo = AlterarOrdemModelo()
+                alterarOrdemModelo.modelo = args.modelo
+                alterarOrdemModelo.ordem = args.ordem
+                alterarOrdemModelo.executar()
             
         if args.comando == "ajuda":
             print("Comandos disponíveis:")

@@ -83,6 +83,10 @@ class Banco:
         self.nome_banco = os.environ.get("NOME_BANCO")
         modelos_disponiveis = self.executar_sql("SELECT id, nome, ordem, busca_id FROM modelos ORDER BY ordem ASC, nome ASC;")
         return modelos_disponiveis
+    
+    def alterar_ordem_modelo(self, nome_model: str, ordem: int):
+        self.nome_banco = os.environ.get("NOME_BANCO")
+        self.executar_sql("UPDATE modelos SET ordem = %s WHERE nome = %s", (ordem, nome_model))
 
     def registrar_metadados_modelo(self, modelo, id_modelo):
         for property in dir(modelo):
