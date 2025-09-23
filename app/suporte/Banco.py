@@ -42,6 +42,7 @@ class Banco:
             mensagem_erro = f"Error connecting to database or executing query: {err}"
             self._logger.error(mensagem_erro)
             print(mensagem_erro)
+            raise err
         finally:
             if mydb and mydb.is_connected():
                 mydb.commit()

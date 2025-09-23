@@ -6,8 +6,9 @@ from typing import Literal, List, Dict
 import json
 
 class Prompt:
-    def __init__(self, system_prompt):
+    def __init__(self, system_prompt, modelo: str = None):
         self._system_prompt = system_prompt
+        self._modelo = modelo
     
     def triagem(self, mensagem_humana: str) -> Dict:
         saida: TriagemOut = self.get_triagem_chain().invoke([
@@ -24,7 +25,7 @@ class Prompt:
     
     def get_triagem_chain(self):
         gaw = GoogleApiWrapper(SupportFactory.buscar_chave_google())
-        llm_triagem = gaw.getLLM()
+        llm_triagem = gaw.getLLM(self._modelo)
         triagem_chain = llm_triagem.with_structured_output(TriagemOut)
         return triagem_chain
     

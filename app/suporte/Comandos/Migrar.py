@@ -18,14 +18,15 @@ class Migrar:
         self._loginfo("Início da migração do banco.")
         banco.executar_sql(create_table_script)
         banco.nome_banco = os.environ.get('NOME_BANCO')
-        banco.executar_sql(self._converter_arquivo_sql_para_string("scripts_migracao/01_tabela_busca_api.sql"))
-        banco.executar_sql(self._converter_arquivo_sql_para_string("scripts_migracao/02_tabela_modelos.sql"))
-        banco.executar_sql(self._converter_arquivo_sql_para_string("scripts_migracao/03_tabela_propriedades_modelos.sql"))
-        banco.executar_sql(self._converter_arquivo_sql_para_string("scripts_migracao/04_tabela_perguntas.sql"))
-        banco.executar_sql(self._converter_arquivo_sql_para_string("scripts_migracao/05_tabela_respostas.sql"))
-        banco.executar_sql(self._converter_arquivo_sql_para_string("scripts_migracao/06_tabela_perguntas_modelo.sql"))
-        banco.executar_sql(self._converter_arquivo_sql_para_string("scripts_migracao/07_adicao_perguntas_modelo.sql"))
-        banco.executar_sql(self._converter_arquivo_sql_para_string("scripts_migracao/08_gemini_flash_25_como_primeiro_modelo.sql"))
+        
+        self._executar_sql_com_stdout(banco, "scripts_migracao/01_tabela_busca_api.sql")
+        self._executar_sql_com_stdout(banco, "scripts_migracao/02_tabela_modelos.sql")
+        self._executar_sql_com_stdout(banco, "scripts_migracao/03_tabela_propriedades_modelos.sql")
+        self._executar_sql_com_stdout(banco, "scripts_migracao/04_tabela_perguntas.sql")
+        self._executar_sql_com_stdout(banco, "scripts_migracao/05_tabela_respostas.sql")
+        self._executar_sql_com_stdout(banco, "scripts_migracao/06_tabela_perguntas_modelo.sql")
+        self._executar_sql_com_stdout(banco, "scripts_migracao/07_adicao_perguntas_modelo.sql")
+        
         self._loginfo("Migração do banco terminada.")
     
     def _converter_arquivo_sql_para_string(self, arquivo: str):
@@ -33,6 +34,12 @@ class Migrar:
         sql_script = arquivo_resource.read()
         arquivo_resource.close()
         return sql_script
+    
+    def _executar_sql_com_stdout(self, banco: Banco, caminho_arquivo):
+        query = self._converter_arquivo_sql_para_string(caminho_arquivo)
+        print("Executando query:")
+        print(query)
+        banco.executar_sql(query)
     
     def _loginfo(self, mensagem):
         self._logger.info(mensagem)
