@@ -25,6 +25,7 @@ class Migrar:
         banco.executar_sql(self._converter_arquivo_sql_para_string("scripts_migracao/05_tabela_respostas.sql"))
         banco.executar_sql(self._converter_arquivo_sql_para_string("scripts_migracao/06_tabela_perguntas_modelo.sql"))
         banco.executar_sql(self._converter_arquivo_sql_para_string("scripts_migracao/07_adicao_perguntas_modelo.sql"))
+        banco.executar_sql(self._converter_arquivo_sql_para_string("scripts_migracao/08_gemini_flash_25_como_primeiro_modelo.sql"))
         self._loginfo("Migração do banco terminada.")
     
     def _converter_arquivo_sql_para_string(self, arquivo: str):

@@ -6,3 +6,4 @@ INSERT INTO perguntas_modelo (
     ("Quero mais 5 dias de trabalho remoto. Como faço?"),
     ("Posso reembolsar cursos ou treinamentos da Alura"),
     ("Quantas capivaras tem no rio Pinheiros?");
+    ("Estou precisando de um atendimento médico do meu plano de saúde e eles estão demorando para me responder. Poderia agilizar?");

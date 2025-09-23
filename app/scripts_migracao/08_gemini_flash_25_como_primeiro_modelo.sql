@@ -1,0 +1,1 @@
+UPDATE models SET ordem = 0 WHERE nome = "models/gemini-2.5-flash";
