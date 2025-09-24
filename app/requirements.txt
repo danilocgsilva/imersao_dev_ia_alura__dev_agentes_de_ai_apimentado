@@ -4,10 +4,18 @@
 #
 #    pip-compile --output-file=requirements.txt project.in
 #
+aiohappyeyeballs==2.6.1
+    # via aiohttp
+aiohttp==3.12.15
+    # via langchain-community
+aiosignal==1.4.0
+    # via aiohttp
 annotated-types==0.7.0
     # via pydantic
 anyio==4.10.0
     # via httpx
+attrs==25.3.0
+    # via aiohttp
 blinker==1.9.0
     # via flask
 cachetools==5.5.2
@@ -21,10 +29,18 @@ charset-normalizer==3.4.3
     # via requests
 click==8.2.1
     # via flask
+dataclasses-json==0.6.7
+    # via langchain-community
+faiss-cpu==1.12.0
+    # via -r project.in
 filetype==1.2.0
     # via langchain-google-genai
 flask==3.1.2
     # via -r project.in
+frozenlist==1.7.0
+    # via
+    #   aiohttp
+    #   aiosignal
 google-ai-generativelanguage==0.6.15
     # via google-generativeai
 google-api-core[grpc]==2.25.1
@@ -51,6 +67,8 @@ googleapis-common-protos==1.70.0
     # via
     #   google-api-core
     #   grpcio-status
+greenlet==3.2.4
+    # via sqlalchemy
 grpcio==1.75.0
     # via
     #   google-api-core
@@ -67,11 +85,14 @@ httplib2==0.31.0
     #   google-auth-httplib2
 httpx==0.28.1
     # via langsmith
+httpx-sse==0.4.1
+    # via langchain-community
 idna==3.10
     # via
     #   anyio
     #   httpx
     #   requests
+    #   yarl
 itsdangerous==2.2.0
     # via flask
 jinja2==3.1.6
@@ -80,12 +101,27 @@ jsonpatch==1.33
     # via langchain-core
 jsonpointer==3.0.0
     # via jsonpatch
+langchain==0.3.27
+    # via langchain-community
+langchain-community==0.3.29
+    # via -r project.in
 langchain-core==0.3.76
-    # via langchain-google-genai
+    # via
+    #   langchain
+    #   langchain-community
+    #   langchain-google-genai
+    #   langchain-text-splitters
 langchain-google-genai==2.0.10
     # via -r project.in
+langchain-text-splitters==0.3.11
+    # via
+    #   -r project.in
+    #   langchain
 langsmith==0.4.28
-    # via langchain-core
+    # via
+    #   langchain
+    #   langchain-community
+    #   langchain-core
 markdown==3.9
     # via -r project.in
 markupsafe==3.0.2
@@ -93,14 +129,32 @@ markupsafe==3.0.2
     #   flask
     #   jinja2
     #   werkzeug
+marshmallow==3.26.1
+    # via dataclasses-json
+multidict==6.6.4
+    # via
+    #   aiohttp
+    #   yarl
+mypy-extensions==1.1.0
+    # via typing-inspect
 mysql-connector-python==9.4.0
     # via -r project.in
+numpy==2.3.3
+    # via
+    #   faiss-cpu
+    #   langchain-community
 orjson==3.11.3
     # via langsmith
 packaging==25.0
     # via
+    #   faiss-cpu
     #   langchain-core
     #   langsmith
+    #   marshmallow
+propcache==0.3.2
+    # via
+    #   aiohttp
+    #   yarl
 proto-plus==1.26.1
     # via
     #   google-ai-generativelanguage
@@ -122,18 +176,31 @@ pyasn1-modules==0.4.2
 pydantic==2.11.9
     # via
     #   google-generativeai
+    #   langchain
     #   langchain-core
     #   langchain-google-genai
     #   langsmith
+    #   pydantic-settings
 pydantic-core==2.33.2
     # via pydantic
+pydantic-settings==2.11.0
+    # via langchain-community
+pymupdf==1.26.4
+    # via -r project.in
 pyparsing==3.2.4
     # via httplib2
+python-dotenv==1.1.1
+    # via pydantic-settings
 pyyaml==6.0.2
-    # via langchain-core
+    # via
+    #   langchain
+    #   langchain-community
+    #   langchain-core
 requests==2.32.5
     # via
     #   google-api-core
+    #   langchain
+    #   langchain-community
     #   langsmith
     #   requests-toolbelt
 requests-toolbelt==1.0.0
@@ -142,26 +209,41 @@ rsa==4.9.1
     # via google-auth
 sniffio==1.3.1
     # via anyio
+sqlalchemy==2.0.43
+    # via
+    #   langchain
+    #   langchain-community
 tenacity==9.1.2
-    # via langchain-core
+    # via
+    #   langchain-community
+    #   langchain-core
 tqdm==4.67.1
     # via google-generativeai
 typing-extensions==4.15.0
     # via
+    #   aiosignal
     #   anyio
     #   google-generativeai
     #   grpcio
     #   langchain-core
     #   pydantic
     #   pydantic-core
+    #   sqlalchemy
+    #   typing-inspect
     #   typing-inspection
+typing-inspect==0.9.0
+    # via dataclasses-json
 typing-inspection==0.4.1
-    # via pydantic
+    # via
+    #   pydantic
+    #   pydantic-settings
 uritemplate==4.2.0
     # via google-api-python-client
 urllib3==2.5.0
     # via requests
 werkzeug==3.1.3
     # via flask
+yarl==1.20.1
+    # via aiohttp
 zstandard==0.25.0
     # via langsmith

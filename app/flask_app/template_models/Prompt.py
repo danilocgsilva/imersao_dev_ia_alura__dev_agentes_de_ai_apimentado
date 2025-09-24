@@ -8,6 +8,7 @@ class Prompt:
         self._h1 = "Prepare um prompt"
         self._lista_modelos = self._buscar_modelos()
         self._nome_pagina = "prompt"
+        self._javascript = "prompt"
         self._nome_pagina_amigavel = "Prompt"
         self._lista_perguntas_modelo = self._busca_perguntas_modelo()
         
@@ -38,6 +39,10 @@ class Prompt:
     @property
     def perguntas_modelo(self):
         return self._lista_perguntas_modelo
+    
+    @property
+    def javascript(self):
+        return self._javascript
     
     @property
     def prompt(self):

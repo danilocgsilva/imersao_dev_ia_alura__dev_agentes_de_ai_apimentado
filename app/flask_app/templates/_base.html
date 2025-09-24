@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ view_model.titulo_pagina }}</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script defer src="{{ url_for('static', filename=view_model.nome_pagina) ~ '.js' }}"></script>
+    {% if view_model.javascript %}
+        <script defer src="{{ url_for('static', filename=view_model.nome_pagina) ~ '.js' }}"></script>
+    {% endif %}
 </head>
 <body class="bg-gray-50 min-h-screen">
     
@@ -25,7 +27,7 @@
                 <div class="hidden md:flex space-x-6">
                     <a href="{{ url_for('perguntar') }}" class="hover:text-blue-200 transition">Faça uma pergunta</a>
                     <a href="{{ url_for('prompt') }}" class="hover:text-blue-200 transition">Prompt</a>
-                    <a href="#" class="hover:text-blue-200 transition">About</a>
+                    <a href="{{ url_for('rag') }}" class="hover:text-blue-200 transition">Rag</a>
                     <a href="#" class="hover:text-blue-200 transition">Contact</a>
                 </div>
             </div>
@@ -33,7 +35,7 @@
             <div id="mobile-menu" class="hidden pb-4 md:hidden">
                 <a href="{{ url_for('perguntar') }}" class="block py-2 hover:bg-blue-500 px-4 rounded transition">Faça uma pergunta</a>
                 <a href="{{ url_for('prompt') }}" class="block py-2 hover:bg-blue-500 px-4 rounded transition">Prompt</a>
-                <a href="#" class="block py-2 hover:bg-blue-500 px-4 rounded transition">About</a>
+                <a href="{{ url_for('rag') }}" class="block py-2 hover:bg-blue-500 px-4 rounded transition">Rag</a>
                 <a href="#" class="block py-2 hover:bg-blue-500 px-4 rounded transition">Contact</a>
             </div>
         </div>

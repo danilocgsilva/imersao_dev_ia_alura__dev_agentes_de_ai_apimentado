@@ -13,3 +13,13 @@ flask
 
 # Conversão de markdown para html
 markdown
+
+# Langchain
+langchain_community
+langchain-text-splitters
+
+# Busca semântica
+faiss-cpu
+
+# Leitura de PDF
+pymupdf

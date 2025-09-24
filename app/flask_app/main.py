@@ -1,6 +1,7 @@
 from flask import Flask, Blueprint, render_template, request, url_for, redirect
 from flask_app.template_models.Index import Index
 from flask_app.template_models.Prompt import Prompt as ModelPrompt
+from flask_app.template_models.Rag import Rag
 from suporte.Perguntar import Perguntar
 from suporte.SupportFactory import SupportFactory
 from suporte.Banco import Banco
@@ -74,3 +75,8 @@ def enviar_prompt():
     return {
         "resposta": resultado_prompt
     }
+    
+    
+@web_framework.route('/rag', endpoint="rag", methods=['GET'])
+def rag():
+    return render_template("rag.html", view_model=Rag())

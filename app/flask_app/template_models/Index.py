@@ -8,6 +8,7 @@ class Index:
         self._h1 = "Faça uma pergunta para a IA"
         self._lista_modelos = self._buscar_modelos()
         self._nome_pagina = "perguntar"
+        self._javascript = "perguntar"
         self._nome_pagina_amigavel = "Faça uma pergunta"
         
     @property
@@ -34,9 +35,14 @@ class Index:
     def nome_pagina_amigavel(self):
         return self._nome_pagina_amigavel
     
+    @property
+    def javascript(self):
+        return self._javascript
+    
     def _buscar_modelos(self):
         banco = Banco()
         modelos = banco.listar_modelos_disponiveis()
         if modelos == None:
             return []
         return modelos
+    

@@ -25,10 +25,7 @@ class Prompt:
         
         resultados = dados["resposta"].model_dump()
         
-
-        
         resultadosJson = json.dumps(resultados, indent=10)
-        
         
         self._banco.registrar_pergunta(mensagem_humana)
         id_pergunta = self._banco.ultimo_id_inserido
