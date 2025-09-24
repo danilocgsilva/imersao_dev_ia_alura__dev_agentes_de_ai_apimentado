@@ -9,6 +9,7 @@ class Rag:
         self._nome_pagina = "rag"
         self._nome_pagina_amigavel = "Rag"
         self._lista_perguntas_modelo = self._busca_perguntas_modelo()
+        self._lista_arquivos_rag = self._busca_lista_arquivos_rag()
         
     def _buscar_modelos(self):
         banco = Banco()
@@ -24,6 +25,13 @@ class Rag:
         if perguntas == None:
             return []
         return perguntas
+    
+    def _busca_lista_arquivos_rag(self):
+        return [
+            'Política de Reembolsos (Viagens e Despesas).pdf',
+            'Política de Uso de E-mail e Segurança da Informação.pdf',
+            'Políticas de Home Office.pdf'
+        ]
     
     @property
     def titulo_pagina(self):
@@ -56,5 +64,9 @@ class Rag:
     @property
     def javascript(self):
         return None
+    
+    @property
+    def lista_arquivos_rag(self):
+        return self._lista_arquivos_rag
 
     
