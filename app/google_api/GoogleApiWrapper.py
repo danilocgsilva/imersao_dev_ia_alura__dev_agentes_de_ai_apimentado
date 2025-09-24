@@ -29,7 +29,8 @@ class GoogleApiWrapper:
         self, 
         pergunta: str, 
         temperatura: float = 0.1, 
-        modelo: str = "gemini-2.5-flash"
+        modelo: str = "gemini-2.5-flash",
+        system_prompt: str = ""
     ):
         llm = self.getLLM(temperatura)
         
@@ -37,7 +38,7 @@ class GoogleApiWrapper:
             llm,
             temperatura,
             modelo,
-            pergunta
+            system_prompt
         )
         
-        return dados_desempenho.invoke()
+        return dados_desempenho.invoke(pergunta)

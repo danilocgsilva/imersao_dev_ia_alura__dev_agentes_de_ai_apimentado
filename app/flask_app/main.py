@@ -55,13 +55,19 @@ def enviar_prompt():
     pergunta_modelo = request.get_json().get('pergunta_modelo')
     tipo_pergunta = request.get_json().get('tipo_pergunta')
     pergunta_aberta = request.get_json().get('pergunta_aberta')
+    
     pergunta = ""
     if tipo_pergunta == "pergunta_aberta":
         pergunta = pergunta_aberta
     elif tipo_pergunta == "pergunta_modelo":
         pergunta = pergunta_modelo
         
-    prompt = Prompt(prompt, modelo)
+    prompt = Prompt(
+        prompt, 
+        GoogleApiWrapper(SupportFactory.buscar_chave_google()),
+        modelo
+    )
+        
     resultado_prompt = prompt.triagemJson(pergunta)
 
     return {
