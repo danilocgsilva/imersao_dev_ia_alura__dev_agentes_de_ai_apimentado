@@ -64,6 +64,7 @@ def enviar_prompt():
         
     prompt = Prompt(
         prompt, 
+        Banco(),
         GoogleApiWrapper(SupportFactory.buscar_chave_google()),
         modelo
     )

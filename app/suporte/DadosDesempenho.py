@@ -19,8 +19,10 @@ class DadosDesempenho:
         timestamp_antes = time.time_ns()
         
         resposta = None
+        comando = None
         if self._system_prompt == "":
             resposta = self._llm.invoke(pergunta)
+            comando = "ChatGoogleGenerativeAI().invoke(<pergunta>)"
         else:
             cadeia_triagem = self._llm.with_structured_output(TriagemOut)
             
@@ -28,6 +30,12 @@ class DadosDesempenho:
                 SystemMessage(content=self._system_prompt),
                 HumanMessage(content=pergunta)
             ])
+            
+            comando = """ChatGoogleGenerativeAI().invoke([
+                SystemMessage(content=promt_systema),
+                HumanMessage(content=pergunta)
+            ])
+            """
         
         timestamp_depois = time.time_ns()
         diferenca_ms = (timestamp_depois - timestamp_antes) / 1_000_000
@@ -36,7 +44,7 @@ class DadosDesempenho:
             "resposta": resposta,
             "temperatura": self._temperatura,
             "modelo_utilizado": self._modelo,
-            "comando": "ChatGoogleGenerativeAI().invoke(<pergunta>)",
+            "comando": comando,
             "timestamp_antes": timestamp_antes / 1000000,
             "timestamp_depois": timestamp_depois / 1000000,
             "diferenca_ms": diferenca_ms
