@@ -1,5 +1,6 @@
 from suporte.Banco import Banco
 from google_api.GoogleApiWrapper import GoogleApiWrapper
+from suporte.DadosDesempenho import DadosDesempenho
 
 class Perguntar:
     def __init__(self, logger, banco: Banco, gaw: GoogleApiWrapper):
@@ -8,11 +9,9 @@ class Perguntar:
         self._gaw = gaw
     
     def perguntar(self, pergunta: str, temperatura: float = 0.1, modelo: str = "gemini-2.5-flash") -> str:
-        resposta_gaw = self._gaw.buscar_resposta(pergunta, temperatura, modelo)
-        resposta = resposta_gaw["resposta"]
+        dados: dict = self._gaw.buscar_resposta(pergunta, temperatura, modelo)
+        resposta = dados["resposta"]
         resposta_str = resposta.content
-        
-        print(resposta_gaw)
         
         self._banco.registrar_pergunta(pergunta)
         id_pergunta = self._banco.ultimo_id_inserido
@@ -20,12 +19,12 @@ class Perguntar:
             resposta_str, 
             id_pergunta, 
             resposta, 
-            resposta_gaw["temperatura"], 
-            resposta_gaw["modelo_utilizado"],
-            resposta_gaw["timestamp_antes"],
-            resposta_gaw["timestamp_depois"],
-            resposta_gaw["diferenca_ms"],
+            dados["temperatura"], 
+            dados["modelo_utilizado"],
+            dados["timestamp_antes"],
+            dados["timestamp_depois"],
+            dados["diferenca_ms"],
         )
-        self._banco.registrar_request(resposta, resposta_gaw["comando"])
+        self._banco.registrar_request(resposta, dados["comando"])
         
         return resposta_str

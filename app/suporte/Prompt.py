@@ -25,7 +25,7 @@ class Prompt:
     
     def get_triagem_chain(self):
         gaw = GoogleApiWrapper(SupportFactory.buscar_chave_google())
-        llm_triagem = gaw.getLLM(self._modelo)
+        llm_triagem = gaw.getLLM(modelo = self._modelo)
         triagem_chain = llm_triagem.with_structured_output(TriagemOut)
         return triagem_chain
     

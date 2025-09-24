@@ -61,7 +61,7 @@ def enviar_prompt():
     elif tipo_pergunta == "pergunta_modelo":
         pergunta = pergunta_modelo
         
-    prompt = Prompt(prompt)
+    prompt = Prompt(prompt, modelo)
     resultado_prompt = prompt.triagemJson(pergunta)
 
     return {
