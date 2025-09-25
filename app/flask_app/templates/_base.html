@@ -8,6 +8,9 @@
     {% if view_model.javascript %}
         <script defer src="{{ url_for('static', filename=view_model.nome_pagina) ~ '.js' }}"></script>
     {% endif %}
+    {% for stylesheet in view_model.stylesheets %}
+        <link rel="stylesheet" href="{{ stylesheet }}">
+    {% endfor %}
 </head>
 <body class="bg-gray-50 min-h-screen">
     

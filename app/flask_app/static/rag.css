@@ -1,0 +1,13 @@
+.action-btn {
+    opacity: 0.7;
+    transition: all 0.2s ease;
+}
+
+.action-btn:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+.entry-item:hover {
+    background-color: #f9fafb;
+}

@@ -1,7 +1,11 @@
 from suporte.Banco import Banco
+from flask_app.template_models.BaseModel import BaseModel
+from flask import url_for
 
-class Rag:
+
+class Rag(BaseModel):
     def __init__(self):
+        super().__init__()
         self._titulo_pagina = "RAG"
         self._nome_app = "RAG"
         self._h1 = "RAG"
@@ -34,39 +38,24 @@ class Rag:
         ]
     
     @property
-    def titulo_pagina(self):
-        return self._titulo_pagina
-    
-    @property
-    def nome_app(self):
-        return self._nome_app
-    
-    @property
-    def h1(self):
-        return self._h1
-    
-    @property
     def lista_modelos(self):
         return self._lista_modelos
-    
-    @property
-    def nome_pagina(self):
-        return self._nome_pagina
-    
-    @property
-    def nome_pagina_amigavel(self):
-        return self._nome_pagina_amigavel
     
     @property
     def lista_perguntas_modelo(self):
         return self._lista_perguntas_modelo
     
-    @property
     def javascript(self):
         return None
     
     @property
     def lista_arquivos_rag(self):
         return self._lista_arquivos_rag
-
+    
+    @property
+    def stylesheets(self) -> list:
+        return [ 
+            "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css",
+            url_for('static', filename=self.nome_pagina) + '.css'
+        ]
     
