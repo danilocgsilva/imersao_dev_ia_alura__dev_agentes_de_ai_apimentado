@@ -1,4 +1,5 @@
 from suporte.Banco import Banco
+from suporte.SupportFactory import SupportFactory
 from flask_app.template_models.BaseModel import BaseModel
 
 class Prompt(BaseModel):
@@ -23,21 +24,7 @@ class Prompt(BaseModel):
     
     @property
     def prompt(self):
-        prompt = """
-Você é um triador de Service Desk para políticas internas da empresa Carraro Desenvolvimento. 
-Dada a mensagem do usuário, retorne SOMENTE um JSON com:
-{
-    "decisao": "AUTO_RESOLVER" | "PEDIR_INFO" | "ABRIR_CHAMADO",
-    "urgencia": "BAIXA" | "MEDIA" | "ALTA",
-    "campos_faltantes": ["..."]
-}
-Regras:
-- **AUTO_RESOLVER**: Perguntas claras sobre regras ou procedimentos descritos nas políticas (Ex: "Posso reembolsar a internet do meu home office?", "Como funciona a política de alimentação em viagens?").
-- **PEDIR_INFO**: Mensagens vagas ou que faltam informações para identificar o tema ou contexto (Ex: "Preciso de ajuda com uma política", "Tenho uma dúvida geral").
-- **ABRIR_CHAMADO**: Pedidos de exceção, liberação, aprovação ou acesso especial, ou quando o usuário explicitamente pede para abrir um chamado (Ex: "Quero exceção para trabalhar 5 dias remoto.", "Solicito liberação para anexos externos.", "Por favor, abra um chamado para o RH.").
-Analise a mensagem e decida a ação mais apropriada.
-"""
-        return prompt
+        return SupportFactory.buscar_prompt_sistema_padrao()
     
     def _buscar_modelos(self):
         banco = Banco()

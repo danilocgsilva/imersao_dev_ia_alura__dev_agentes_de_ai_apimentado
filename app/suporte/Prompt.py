@@ -41,7 +41,6 @@ class Prompt:
         )
         self._banco.registrar_request(resultadosJson, dados["comando"])
         
-        
         return self.newlineParaBr(resultadosJson)
     
     def triagem(self, mensagem_humana: str) -> dict:

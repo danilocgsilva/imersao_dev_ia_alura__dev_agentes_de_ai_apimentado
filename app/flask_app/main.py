@@ -76,7 +76,6 @@ def enviar_prompt():
         "resposta": resultado_prompt
     }
     
-    
 @web_framework.route('/rag', endpoint="rag", methods=['GET'])
 def rag():
     return render_template("rag.html", view_model=Rag())
