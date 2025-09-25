@@ -6,6 +6,9 @@ from suporte.Comandos.RegistrarModelosDisponiveis import RegistrarModelosDisponi
 from suporte.Comandos.Perguntar import Perguntar
 from suporte.Comandos.RenovarBanco import RenovarBanco
 from suporte.Comandos.AlterarOrdemModelo import AlterarOrdemModelo
+from suporte.Comandos.Rag.ListarDocumentosRag import ListarDocumentosRag
+from suporte.Comandos.Rag.VerChunksDocumentos import VerChunksDocumentos
+from suporte.Comandos.CarregarDocumentos import CarregarDocumentos
 import re
 
 def clean_filename(filename):
@@ -21,7 +24,9 @@ def clean_filename(filename):
 
 def buscar_par_de_comandos():
     lista_arquivos = os.listdir("suporte/Comandos")
-    lista_arquivos_comandos = [arquivo for arquivo in lista_arquivos if arquivo != "__pycache__"]
+    lista_arquivos += os.listdir("suporte/Comandos/Rag")
+    exclusoes = {"__pycache__", "ComandoBase.py", "__init__.py"}
+    lista_arquivos_comandos = [arquivo for arquivo in lista_arquivos if arquivo not in exclusoes ]
     lista_comandos_classes = list(map(lambda x: clean_filename(x), lista_arquivos_comandos))
     dict_comando_classe = {}
     for par_comando_classe in lista_comandos_classes:
@@ -80,6 +85,18 @@ def main():
             
         if args.comando == "renovar_banco":
             comando = RenovarBanco()
+            comando.executar()
+            
+        if args.comando == "listar_documentos_rag":
+            comando = ListarDocumentosRag()
+            comando.executar()
+            
+        if args.comando == "carregar_documentos":
+            comando = CarregarDocumentos()
+            comando.executar()
+
+        if args.comando == "ver_chunks_documentos":
+            comando = VerChunksDocumentos()
             comando.executar()
             
         if args.comando == "perguntar":

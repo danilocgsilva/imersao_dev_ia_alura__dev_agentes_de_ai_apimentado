@@ -1,7 +1,8 @@
 from suporte.Banco import Banco
+from suporte.SupportFactory import SupportFactory
 from flask_app.template_models.BaseModel import BaseModel
-from flask import url_for
-
+from flask import url_for, current_app
+import os
 
 class Rag(BaseModel):
     def __init__(self):
@@ -31,11 +32,8 @@ class Rag(BaseModel):
         return perguntas
     
     def _busca_lista_arquivos_rag(self):
-        return [
-            'Política de Reembolsos (Viagens e Despesas).pdf',
-            'Política de Uso de E-mail e Segurança da Informação.pdf',
-            'Políticas de Home Office.pdf'
-        ]
+        rag_path = os.path.join(current_app.root_path, 'documentos_rag', 'fixos')
+        return os.listdir(rag_path)
     
     @property
     def lista_modelos(self):

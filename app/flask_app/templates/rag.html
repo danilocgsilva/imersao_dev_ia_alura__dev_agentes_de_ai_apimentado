@@ -42,22 +42,17 @@
 
         </form>
 
-
-
         <div class="max-w mx-auto">
-            <div class="mb-8 my-4">
+            <div class="mb-4 my-8">
                 <h1 class="text-center text-2xl font-bold text-gray-800">Lista de arquivos para RAG</h1>
             </div>
 
-            
             <div class="bg-white rounded-lg shadow-md overflow-hidden">
-                
                 <div class="bg-gray-100 px-6 py-3 border-b border-gray-200 flex justify-between items-center">
                     <div class="font-medium text-gray-700">Arquivo</div>
                     <div class="font-medium text-gray-700">Ações</div>
                 </div>
 
-                
                 <div class="divide-y divide-gray-200">
 
                     {% for arquivo_rag in view_model.lista_arquivos_rag %}
@@ -79,9 +74,6 @@
                 </div>
             </div>
         </div>
-
-
-
 
     </div>
 </div>

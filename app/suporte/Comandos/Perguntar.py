@@ -2,10 +2,11 @@ from suporte.SupportFactory import SupportFactory
 from google_api.GoogleApiWrapper import GoogleApiWrapper
 from suporte.Banco import Banco
 from suporte.Perguntar import Perguntar as PerguntarApp
+from suporte.Comandos.ComandoBase import ComandoBase
 
-class Perguntar:
+class Perguntar(ComandoBase):
     def __init__(self):
-        self._logger = SupportFactory.getLogger()
+        super().__init__()
         self._gaw = GoogleApiWrapper(SupportFactory.buscar_chave_google())
         self._resposta = ""
         self._pergunta = ""
@@ -28,7 +29,3 @@ class Perguntar:
         
     def get_resposta(self) -> str:
         return self._resposta
-        
-    def _loginfo(self, mensagem):
-        if self._logger:
-            self._logger.info(mensagem)

@@ -1,11 +1,8 @@
 from suporte.Banco import Banco
 import os
-from suporte.SupportFactory import SupportFactory
+from suporte.Comandos.ComandoBase import ComandoBase
 
-class Migrar:
-    def __init__(self):
-        self._logger = SupportFactory.getLogger()
-    
+class Migrar(ComandoBase):
     def executar(self):
         banco = Banco(self._logger)
 
@@ -41,6 +38,3 @@ class Migrar:
         print(query)
         banco.executar_sql(query)
     
-    def _loginfo(self, mensagem):
-        self._logger.info(mensagem)
-
