@@ -68,6 +68,23 @@ def main():
         required=False,
         default=""
     )
+    parser.add_argument(
+        '--tamanho-chunk',
+        help='O tamanho do chunk para o comando ver_chunks_documentos',
+        required=False,
+        default=300
+    )
+    parser.add_argument(
+        '--chunk-overlap',
+        help='O tamanho do overlap para o comando ver_chunks_documentos',
+        required=False,
+        default=30
+    )
+    parser.add_argument(
+        '--apenas-page-content',
+        help='Se deve retornar apenas o page_content para o comando ver_chunks_documentos',
+        action='store_true'
+    )
     args = parser.parse_args()
     
     if args.comando in dict_pares_comando_classe or args.comando == "ajuda":
@@ -97,7 +114,11 @@ def main():
 
         if args.comando == "ver_chunks_documentos":
             comando = VerChunksDocumentos()
-            comando.executar()
+            comando.executar(
+                args.tamanho_chunk,
+                args.chunk_overlap,
+                args.apenas_page_content
+            )
             
         if args.comando == "perguntar":
             if args.pergunta == "":
