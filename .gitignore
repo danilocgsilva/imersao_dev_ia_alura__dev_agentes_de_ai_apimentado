@@ -10,3 +10,4 @@ app/flask_app/__pycache__/*
 app/flask_app/template_models/__pycache__/*
 app/web_framework/__pycache__/*
 app/suporte/Comandos/Rag/__pycache__/*
+app/flask_app/rotas/__pycache__/*
