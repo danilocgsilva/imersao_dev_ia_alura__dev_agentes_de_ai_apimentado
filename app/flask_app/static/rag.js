@@ -1,5 +1,50 @@
 let lista_botoes_acoes = document.querySelectorAll('.action-btn');
 const resultados = document.getElementById('results');
+const botao_perguntar = document.getElementById('botao_perguntar');
+
+const animacao_espera = {
+    contador: 0,
+    id_intervalo: null,
+
+    start: function () {
+        botao_perguntar.classList.add("disabled:bg-gray-400");
+        botao_perguntar.classList.add("disabled:hover:bg-gray-400");
+        botao_perguntar.classList.add("disabled:cursor-not-allowed");
+        botao_perguntar.classList.add("disabled:opacity-75");
+        botao_perguntar.disabled = true;
+        
+        resultados.style.fontSize = "200%";
+
+        this.contador = 0;
+        let innerHtmlConteudo = "Respondendo.";
+        resultados.innerHTML = innerHtmlConteudo;
+
+        if (this.id_intervalo) {
+            clearInterval(this.id_intervalo);
+        }
+
+        this.id_intervalo = setInterval(() => {
+            if (typeof resultados !== 'undefined' && resultados) {
+                resultados.innerHTML = innerHtmlConteudo + ".".repeat(this.contador % 8);
+                this.contador++;
+            }
+        }, 400);
+    },
+
+    stop: function () {
+        resultados.style.fontSize = null;
+        botao_perguntar.classList.remove("disabled:bg-gray-400");
+        botao_perguntar.classList.remove("disabled:hover:bg-gray-400");
+        botao_perguntar.classList.remove("disabled:cursor-not-allowed");
+        botao_perguntar.classList.remove("disabled:opacity-75");
+        botao_perguntar.disabled = false;
+
+        if (this.id_intervalo) {
+            clearInterval(this.id_intervalo);
+            this.id_intervalo = null;
+        }
+    }
+};
 
 function Formulario() {
     this.formulario = document.getElementById('formulario');
@@ -16,10 +61,11 @@ function Formulario() {
                 return;
             }
 
+            animacao_espera.start();
             try {
                 let texto_resposta = "";
 
-                const response = await fetch('/enviar_pergunta_rag', {
+                const response = await fetch('/rag_enviar', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -36,6 +82,8 @@ function Formulario() {
             } catch (error) {
                 console.error('Error:', error);
                 alert('Ocorreu um erro ao enviar o formulário.');
+            } finally {
+                animacao_espera.stop();
             }
         });
     }
