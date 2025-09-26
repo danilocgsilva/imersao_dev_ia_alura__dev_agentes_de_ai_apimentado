@@ -57,7 +57,6 @@ class Rag(AppRootBase):
         splitter = RecursiveCharacterTextSplitter(chunk_size=chunk_size, chunk_overlap=chunk_overlap)
         chunks = splitter.split_documents(self._documentos_carregados)
         return chunks
-
         
     def perguntar_politica_rag(self, pergunta: str) -> dict:
         documentos_relacionados = self._retriever.invoke(pergunta)

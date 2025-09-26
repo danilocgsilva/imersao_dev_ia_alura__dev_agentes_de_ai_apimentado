@@ -3,6 +3,7 @@ from flask_app.template_models.Rag import Rag
 from suporte.Rag import Rag as RagDomain
 from flask_app.rotas.pergunta_simples import pergunta_simples
 from flask_app.rotas.resposta_estruturada import resposta_estruturada
+from suporte.ContarDesempenhoPergunta import ContarDesempenhoPergunta
 
 web_framework = Flask(__name__)
 route_root = Blueprint('route_root', __name__)
@@ -21,9 +22,12 @@ def rag():
 @web_framework.route('/rag_enviar', endpoint="rag_enviar", methods=['POST'])
 def rag_enviar():
     pergunta = request.get_json().get('pergunta')
+    
     rag = RagDomain()
-    rag.setUp()
-    resposta = rag.perguntar_politica_rag(pergunta)
+    contar_desempenho_pergunta = ContarDesempenhoPergunta(rag)
+    contar_desempenho_pergunta.pergunta = pergunta
+    contar_desempenho_pergunta.executar()
+    
     return {
-        "resposta": resposta["answer"]
+        "resposta": contar_desempenho_pergunta.buscar_resposta()
     }
