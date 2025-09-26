@@ -18,9 +18,6 @@ class Perguntar:
         self._banco.registrar_resposta(
             resposta_str, 
             id_pergunta, 
-            resposta, 
-            dados["temperatura"], 
-            dados["modelo_utilizado"],
             dados["timestamp_antes"],
             dados["timestamp_depois"],
             dados["diferenca_ms"],

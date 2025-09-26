@@ -122,30 +122,23 @@ class Banco:
         self, 
         resposta: str,
         id_pergunta: int,
-        resposta_cheia,
-        temperatura: int,
-        modelo_utilizado: str,
         timestamp_antes: float,
         timestamp_depois: float,
         diferenca_ms: float
     ):
         self.nome_banco = os.environ.get("NOME_BANCO")
-        resposta_serializada = Utilidades.serializar(resposta_cheia)
         query_insert = """
             INSERT INTO respostas (
                 resposta, 
                 pergunta_id, 
-                resposta_api_total, 
-                temperatura, 
-                modelo_utilizado,
                 data_inicio_pergunta_milissegundos,
                 data_final_pergunta_milissegundos,
                 diferenca_milissegundos
-            ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+            ) VALUES (%s, %s, %s, %s, %s, %s)
         """
         self.executar_sql(
             query_insert, 
-            (resposta, id_pergunta, resposta_serializada, temperatura, modelo_utilizado, timestamp_antes, timestamp_depois, diferenca_ms)
+            (resposta, id_pergunta, timestamp_antes, timestamp_depois, diferenca_ms)
         )
                     
     def _loginfo(self, mensagem):
