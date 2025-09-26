@@ -78,9 +78,6 @@ formulario.addEventListener('submit', async function (e) {
     const prompt = document.getElementById('prompt').value;
     const tipo_pergunta = document.querySelector('input[name="tipo_pergunta"]:checked').value
 
-    console.log("pergunta aberta: " + pergunta_aberta)
-    console.log("tipo de pergunta: " + tipo_pergunta)
-
     try {
         let texto_resposta = "";
         animacao_espera.start();

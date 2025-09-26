@@ -4,6 +4,8 @@ from suporte.Rag import Rag as RagDomain
 from flask_app.rotas.pergunta_simples import pergunta_simples
 from flask_app.rotas.resposta_estruturada import resposta_estruturada
 from suporte.ContarDesempenhoPergunta import ContarDesempenhoPergunta
+from suporte.Banco import Banco
+from suporte.Utilidades import Utilidades
 
 web_framework = Flask(__name__)
 route_root = Blueprint('route_root', __name__)
@@ -28,6 +30,22 @@ def rag_enviar():
     contar_desempenho_pergunta.pergunta = pergunta
     contar_desempenho_pergunta.executar()
     
+    banco = Banco()
+    banco.registrar_pergunta(pergunta)
+    id_pergunta = banco.ultimo_id_inserido
+    dados_desempenho = contar_desempenho_pergunta.dados_desempenho
+    
+    banco.registrar_resposta(
+        resposta=contar_desempenho_pergunta.resposta,
+        id_pergunta=id_pergunta,
+        resposta_cheia=Utilidades.serializar(dados_desempenho["resposta"]),
+        modelo_utilizado="",
+        temperatura="",
+        timestamp_antes=dados_desempenho["timestamp_antes"],
+        timestamp_depois=dados_desempenho["timestamp_depois"],
+        diferenca_ms=dados_desempenho["diferenca_ms"]
+    )
+    
     return {
-        "resposta": contar_desempenho_pergunta.buscar_resposta()
+        "resposta": contar_desempenho_pergunta.resposta
     }
