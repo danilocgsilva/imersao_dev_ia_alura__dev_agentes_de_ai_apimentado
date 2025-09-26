@@ -1,8 +1,8 @@
+import os
 from langchain_community.document_loaders import PyMuPDFLoader
 from suporte.ListaDocumentosRag import ListaDocumentosRag
 from suporte.AppRootBase import AppRootBase
 from suporte.SupportFactory import SupportFactory 
-import os
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from langchain_community.vectorstores import FAISS
@@ -19,16 +19,7 @@ class Rag(AppRootBase):
         self._documentos_carregados = []
         self._retriever = None
         self._document_chain = None
-            
-    def buscar_chunks(
-        self, 
-        chunk_size: int = 300, 
-        chunk_overlap: int = 30
-    ):
-        splitter = RecursiveCharacterTextSplitter(chunk_size=chunk_size, chunk_overlap=chunk_overlap)
-        chunks = splitter.split_documents(self._documentos_carregados)
-        return chunks
-    
+        
     def setUp(self):
         self.carrega_documentos()
         embeddings = GoogleGenerativeAIEmbeddings(
@@ -54,11 +45,21 @@ class Rag(AppRootBase):
         
         google_api_wrapper = GoogleApiWrapper(SupportFactory.buscar_chave_google())
         self._document_chain = create_stuff_documents_chain(
-            google_api_wrapper.getLlm(),
+            google_api_wrapper.getLLM(),
             prompt_rag
         )
+            
+    def buscar_chunks(
+        self, 
+        chunk_size: int = 300, 
+        chunk_overlap: int = 30
+    ):
+        splitter = RecursiveCharacterTextSplitter(chunk_size=chunk_size, chunk_overlap=chunk_overlap)
+        chunks = splitter.split_documents(self._documentos_carregados)
+        return chunks
+
         
-    def perguntar_politica_rag(self, pergunta: str) -> Dict:
+    def perguntar_politica_rag(self, pergunta: str) -> dict:
         documentos_relacionados = self._retriever.invoke(pergunta)
         if not documentos_relacionados:
             return {
@@ -70,7 +71,19 @@ class Rag(AppRootBase):
             "input": pergunta,
             "context": documentos_relacionados
         })
-    
+        txt = (answer or "").strip()
+        if txt.rstrip(".!?") == "Não sei":
+            return {
+                "answer": "Não sei",
+                "citacoes": [],
+                "contexto_encontrado": False
+            }
+        return {
+            "answer": txt,
+            "citacoes": documentos_relacionados,
+            "contexto_encontrado": True
+        }
+        
     def carrega_documentos(self):
         lista_documentos_rag = ListaDocumentosRag().documentos
         for documento_nome in lista_documentos_rag:

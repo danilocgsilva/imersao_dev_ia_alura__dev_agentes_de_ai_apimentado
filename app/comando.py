@@ -8,7 +8,8 @@ from suporte.Comandos.RenovarBanco import RenovarBanco
 from suporte.Comandos.AlterarOrdemModelo import AlterarOrdemModelo
 from suporte.Comandos.Rag.ListarDocumentosRag import ListarDocumentosRag
 from suporte.Comandos.Rag.VerChunksDocumentos import VerChunksDocumentos
-from suporte.Comandos.CarregarDocumentos import CarregarDocumentos
+from suporte.Comandos.Rag.CarregarDocumentos import CarregarDocumentos
+from suporte.Comandos.Rag.PerguntarComRag import PerguntarComRag
 import re
 
 def clean_filename(filename):
@@ -25,6 +26,7 @@ def clean_filename(filename):
 def buscar_par_de_comandos():
     lista_arquivos = os.listdir("suporte/Comandos")
     lista_arquivos += os.listdir("suporte/Comandos/Rag")
+    
     exclusoes = {"__pycache__", "ComandoBase.py", "__init__.py"}
     lista_arquivos_comandos = [arquivo for arquivo in lista_arquivos if arquivo not in exclusoes ]
     lista_comandos_classes = list(map(lambda x: clean_filename(x), lista_arquivos_comandos))
@@ -47,6 +49,12 @@ def main():
     parser.add_argument(
         '--pergunta', 
         help='Pergunta ser feita',
+        required=False,
+        default=""
+    )
+    parser.add_argument(
+        '--pergunta-com-rag', 
+        help='Pergunta ser feita considerando os arquivos salvos para gerar o contexto.',
         required=False,
         default=""
     )
@@ -81,7 +89,7 @@ def main():
         default=30
     )
     parser.add_argument(
-        '--apenas-page-content',
+        '--apenas-conteudo',
         help='Se deve retornar apenas o page_content para o comando ver_chunks_documentos',
         action='store_true'
     )
@@ -117,7 +125,7 @@ def main():
             comando.executar(
                 args.tamanho_chunk,
                 args.chunk_overlap,
-                args.apenas_page_content
+                args.apenas_conteudo
             )
             
         if args.comando == "perguntar":
@@ -130,6 +138,19 @@ def main():
                 perguntar.executar()
                 resposta = perguntar.get_resposta()
                 print(resposta)
+                
+        if args.comando == "perguntar_com_rag":
+            if args.pergunta == "":
+                print("O comando para perguntar requer um segundo parâmetro, que é a --pergunta")
+            else:
+                perguntar = PerguntarComRag()
+                perguntar.set_pergunta(args.pergunta)
+                perguntar.executar()
+                resposta = perguntar.get_resposta()
+                if args.apenas_conteudo:
+                    print(resposta["answer"])
+                else:
+                    print(resposta)
                 
         if args.comando == "alterar_ordem_modelo":
             if args.modelo == "" or args.ordem == "":
