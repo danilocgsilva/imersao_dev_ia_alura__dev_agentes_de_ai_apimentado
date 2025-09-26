@@ -1,6 +1,33 @@
 let lista_botoes_acoes = document.querySelectorAll('.action-btn');
 const resultados = document.getElementById('results');
 const botao_perguntar = document.getElementById('botao_perguntar');
+const seletor_pergunta = document.getElementsByName('tipo_pergunta');
+
+function buscar_valor_radio() {
+    for (const radio of seletor_pergunta) {
+        if (radio.checked) {
+            return radio.value;
+        }
+    }
+}
+
+function controla_campos_pergunta() {
+    const campo_pergunta_modelo = document.getElementById('pergunta_modelo');
+    const campo_pergunta_aberta = document.getElementById('pergunta_aberta_wrapper');
+
+    let selectedValue = buscar_valor_radio();
+
+    if (selectedValue === "pergunta_modelo") {
+        campo_pergunta_modelo.classList.remove("hidden")
+        campo_pergunta_aberta.classList.add("hidden")
+    } else if (selectedValue === "pergunta_aberta") {
+        campo_pergunta_modelo.classList.add("hidden")
+        campo_pergunta_aberta.classList.remove("hidden")
+    } else {
+        campo_pergunta_modelo.classList.add("hidden")
+        campo_pergunta_aberta.classList.add("hidden")
+    }
+}
 
 const animacao_espera = {
     contador: 0,
@@ -54,7 +81,12 @@ function Formulario() {
             e.preventDefault();
 
             const modelo = document.getElementById('modelo').value;
-            this._pergunta = document.getElementsByName('pergunta_modelo')[0].value;
+
+            if (buscar_valor_radio() === "pergunta_modelo") {
+                this._pergunta = document.getElementsByName('pergunta_modelo')[0].value;
+            } else if (buscar_valor_radio() === "pergunta_aberta") {
+                this._pergunta = document.getElementById('pergunta_aberta').value;
+            }
 
             if (!modelo || !this._pergunta) {
                 alert('Todos os campos precisam ser preenchidos');
@@ -120,6 +152,11 @@ function atribuir_acoes_listagem_arquivos_rag() {
     });
 }
 
+controla_campos_pergunta();
 atribuir_acoes_listagem_arquivos_rag();
 const formulario = new Formulario();
-
+seletor_pergunta.forEach(radio => {
+    radio.addEventListener('change', function() {
+        controla_campos_pergunta();
+    });
+})

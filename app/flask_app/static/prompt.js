@@ -2,17 +2,19 @@ const formulario = document.getElementById('formulario');
 const resultados = document.getElementById('results');
 const seletor_pergunta = document.getElementsByName('tipo_pergunta');
 
+function buscar_valor_radio() {
+    for (const radio of seletor_pergunta) {
+        if (radio.checked) {
+            return radio.value;
+        }
+    }
+}
+
 function controla_campos_pergunta() {
     const campo_pergunta_modelo = document.getElementById('pergunta_modelo');
     const campo_pergunta_aberta = document.getElementById('pergunta_aberta_wrapper');
 
-    let selectedValue = null;
-    for (const radio of seletor_pergunta) {
-        if (radio.checked) {
-            selectedValue = radio.value;
-            break;
-        }
-    }
+    let selectedValue = buscar_valor_radio();
 
     if (selectedValue === "pergunta_modelo") {
         campo_pergunta_modelo.classList.remove("hidden")
@@ -62,7 +64,7 @@ const animacao_espera = {
 };
 
 seletor_pergunta.forEach(radio => {
-    radio.addEventListener('change', function() {
+    radio.addEventListener('change', function () {
         controla_campos_pergunta();
     });
 })
