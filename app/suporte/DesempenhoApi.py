@@ -28,7 +28,10 @@ class DesempenhoApi:
         )
         
     def executar(self, definidor: str):
-        definidores_esperados = {"google.generativeai.list_models()"}
+        definidores_esperados = {
+            "google.generativeai.list_models()",
+            "GoogleApiWrapper.buscar_resposta()"
+        }
         if definidor not in definidores_esperados:
             raise Exception("O objeto de domínio não é reconhecido.")
         self._definidor = definidor
@@ -37,6 +40,8 @@ class DesempenhoApi:
 
         if definidor == "google.generativeai.list_models()":
             self._genai_list_models()
+        if definidor == "GoogleApiWrapper.buscar_resposta()":
+            self._googe_api_wrapper_buscar_resposta()
             
         self._timestamp_final = time.time_ns() / 1_000_000
         self._tempo_transcorrido = self._timestamp_final - self._timestamp_inicio
@@ -46,5 +51,8 @@ class DesempenhoApi:
     
     def _genai_list_models(self):
         self._response = self._objeto_dominio.list_models()
+        
+    def _googe_api_wrapper_buscar_resposta(self):
+        self._response = self._objeto_dominio.buscar_resposta()
         
     

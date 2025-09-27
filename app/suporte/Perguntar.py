@@ -1,6 +1,7 @@
 from suporte.Banco import Banco
 from google_api.GoogleApiWrapper import GoogleApiWrapper
 from suporte.DadosDesempenho import DadosDesempenho
+from suporte.DesempenhoApi import DesempenhoApi
 
 class Perguntar:
     def __init__(self, logger, banco: Banco, gaw: GoogleApiWrapper):
@@ -14,18 +15,12 @@ class Perguntar:
         self._gaw.temperatura = temperatura 
         self._gaw.modelo = modelo
         
-        # dados: dict = self._gaw.buscar_resposta(pergunta, temperatura, modelo)
-        dados: dict = self._gaw.buscar_resposta()
         
-        # raise Exception("Para aqui 5")
-        
-        # print("----")
-        # print(dados)
-        # print("----")
-        
-        # raise Exception("Para aqui 4")
-        
-        
+        # dados: dict = self._gaw.buscar_resposta()
+        dados_api = DesempenhoApi(self._gaw)
+        dados_api.executar("GoogleApiWrapper.buscar_resposta()")
+        dados: dict = dados_api.buscar_resultado()
+    
         resposta = dados["resposta"]
         resposta_str = resposta.content
         
