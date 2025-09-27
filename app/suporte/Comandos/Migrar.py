@@ -16,7 +16,7 @@ class Migrar(ComandoBase):
         banco.executar_sql(create_table_script)
         banco.nome_banco = os.environ.get('NOME_BANCO')
         
-        self._executar_sql_com_stdout(banco, "scripts_migracao/01_tabela_busca_api.sql")
+        self._executar_sql_com_stdout(banco, "scripts_migracao/01_tabela_desempenho_api.sql")
         self._executar_sql_com_stdout(banco, "scripts_migracao/02_tabela_modelos.sql")
         self._executar_sql_com_stdout(banco, "scripts_migracao/03_tabela_propriedades_modelos.sql")
         self._executar_sql_com_stdout(banco, "scripts_migracao/04_tabela_perguntas.sql")

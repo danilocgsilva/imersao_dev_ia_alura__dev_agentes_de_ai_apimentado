@@ -1,6 +1,5 @@
 import time
 
-
 class ContarDesempenhoPergunta:
     def __init__(self, objeto_dominio):
         self._objeto_dominio = objeto_dominio

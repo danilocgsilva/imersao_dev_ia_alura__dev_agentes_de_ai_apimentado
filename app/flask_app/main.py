@@ -9,13 +9,14 @@ from suporte.Utilidades import Utilidades
 
 web_framework = Flask(__name__)
 route_root = Blueprint('route_root', __name__)
+
 web_framework.register_blueprint(route_root)
 web_framework.register_blueprint(pergunta_simples)
 web_framework.register_blueprint(resposta_estruturada)
 
 @web_framework.route("/", endpoint="index", methods=['GET'])
 def index():
-    return redirect(url_for("perguntar"))
+    return redirect(url_for("pergunta_simples.perguntar"))
     
 @web_framework.route('/rag', endpoint="rag", methods=['GET'])
 def rag():

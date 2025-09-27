@@ -1,7 +1,8 @@
 import google.generativeai as genai
 from langchain_google_genai import ChatGoogleGenerativeAI
 from suporte.DadosDesempenho import DadosDesempenho
-import time
+from suporte.DesempenhoApi import DesempenhoApi
+from suporte.Banco import Banco
         
 class GoogleApiWrapper:
     def __init__(self, chave_google):
@@ -9,9 +10,17 @@ class GoogleApiWrapper:
         self._modelo_padrao = "gemini-2.5-flash"
         self._temperatura = 0.1
     
-    def getModels(self) -> list:
+    def getModels(self, banco: Banco = None) -> list:
         genai.configure(api_key=self._chave_google)
-        response = genai.list_models()
+        
+        if banco:
+            desempenho_api = DesempenhoApi(genai)
+            desempenho_api.executar("google.generativeai.list_models()")
+            desempenho_api.registrar(banco, "Busca de modelos disponíveis")
+            response = desempenho_api.buscar_resultado()
+        else:
+            response = genai.list_models()
+        
         return list(response)
     
     def getLLM(self, temperatura: float = 0.1, modelo: str = None) -> ChatGoogleGenerativeAI:

@@ -52,7 +52,6 @@ class Banco:
     def registrar_modelos_disponiveis(self, modelos: list):
         quantidade_modelos_encontrados = str(len(modelos))
         self._loginfo(f"Foram encontrados {quantidade_modelos_encontrados} modelos")
-        self.registrar_request_de_busca_modelos_disponiveis(modelos)
         self._loginfo("Resultados da busca da api registrados em banco.")
         
         id_registro_request = self.ultimo_id_inserido
@@ -66,11 +65,6 @@ class Banco:
             self._loginfo(f"Modelo {modelo.name} registrado em banco")
             loop_modelos += 1
             
-    def registrar_request_de_busca_modelos_disponiveis(self, modelos):
-        self.nome_banco = os.environ.get("NOME_BANCO")
-        modelos_serializados_base64 = Utilidades.serializar(modelos)
-        self.executar_sql(f"INSERT INTO busca_api (comando, retorno_serializado) VALUES (%s, %s);", ('GoogleApiWrapper().getModels()', modelos_serializados_base64,))
-        
     def registrar_request(self, conteudo, comando):
         self.nome_banco = os.environ.get("NOME_BANCO")
         conteudo_serializado = Utilidades.serializar(conteudo)
@@ -78,11 +72,11 @@ class Banco:
         
     def salvar_modelo(self, modelo, id_registro_request: int):
         self.nome_banco = os.environ.get("NOME_BANCO")
-        self.executar_sql("INSERT INTO modelos (nome, ordem, busca_id) VALUES (%s, %s, %s)", (modelo.name, 1, id_registro_request))
+        self.executar_sql("INSERT INTO modelos (nome, ordem, desempenho_id) VALUES (%s, %s, %s)", (modelo.name, 1, id_registro_request))
         
     def listar_modelos_disponiveis(self):
         self.nome_banco = os.environ.get("NOME_BANCO")
-        modelos_disponiveis = self.executar_sql("SELECT id, nome, ordem, busca_id FROM modelos ORDER BY ordem ASC, nome ASC;")
+        modelos_disponiveis = self.executar_sql("SELECT id, nome, ordem, desempenho_id FROM modelos ORDER BY ordem ASC, nome ASC;")
         if modelos_disponiveis == None:
             return []
         return modelos_disponiveis
@@ -134,11 +128,36 @@ class Banco:
                 data_inicio_pergunta_milissegundos,
                 data_final_pergunta_milissegundos,
                 diferenca_milissegundos
-            ) VALUES (%s, %s, %s, %s, %s, %s)
+            ) VALUES (%s, %s, %s, %s, %s)
         """
         self.executar_sql(
             query_insert, 
             (resposta, id_pergunta, timestamp_antes, timestamp_depois, diferenca_ms)
+        )
+        
+    def registrar_desempenho_api(
+        self,
+        contexto: str,
+        data_inicio: float,
+        data_fim: float,
+        tempo_transcorrido: float,
+        comando: str,
+        retorno_serializado: str
+    ):
+        self.nome_banco = os.environ.get("NOME_BANCO")
+        query_insert = """
+            INSERT INTO desempenho_api (
+                contexto,
+                inicio_busca,
+                fim_busca,
+                tempo_transcorrido,
+                comando,
+                retorno_serializado
+            ) VALUES (%s, %s, %s, %s, %s, %s)
+        """
+        self.executar_sql(
+            query_insert,
+            (contexto, data_inicio, data_fim, tempo_transcorrido, comando, retorno_serializado)
         )
                     
     def _loginfo(self, mensagem):

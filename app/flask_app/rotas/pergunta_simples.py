@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, redirect, url_for
 from flask_app.template_models.Index import Index
 import markdown
 from suporte.Perguntar import Perguntar
@@ -7,10 +7,6 @@ from suporte.Banco import Banco
 from google_api.GoogleApiWrapper import GoogleApiWrapper
 
 pergunta_simples = Blueprint('pergunta_simples', __name__)
-
-@pergunta_simples.route("/")
-def mainroute():
-    return "Hello! I am a working route!"
 
 @pergunta_simples.route("/perguntar", endpoint="perguntar", methods=['GET'])
 def perguntar():
