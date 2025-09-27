@@ -14,6 +14,7 @@ class Perguntar:
         self._gaw.modelo = modelo
         
         desempenho_api = DesempenhoApi(self._gaw)
+        desempenho_api.modelo = modelo
         desempenho_api.executar("GoogleApiWrapper.buscar_resposta()")
         desempenho_api.registrar(self._banco, "Respondendo pergunta")
         dados: dict = desempenho_api.buscar_resultado()
