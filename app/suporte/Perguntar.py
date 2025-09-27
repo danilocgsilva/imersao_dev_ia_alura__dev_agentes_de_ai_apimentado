@@ -1,6 +1,5 @@
 from suporte.Banco import Banco
 from google_api.GoogleApiWrapper import GoogleApiWrapper
-from suporte.DadosDesempenho import DadosDesempenho
 from suporte.DesempenhoApi import DesempenhoApi
 
 class Perguntar:
@@ -10,16 +9,14 @@ class Perguntar:
         self._gaw = gaw
     
     def perguntar(self, pergunta: str, temperatura: float = 0.1, modelo: str = "gemini-2.5-flash") -> str:
-        
         self._gaw.pergunta = pergunta
         self._gaw.temperatura = temperatura 
         self._gaw.modelo = modelo
         
-        
-        # dados: dict = self._gaw.buscar_resposta()
-        dados_api = DesempenhoApi(self._gaw)
-        dados_api.executar("GoogleApiWrapper.buscar_resposta()")
-        dados: dict = dados_api.buscar_resultado()
+        desempenho_api = DesempenhoApi(self._gaw)
+        desempenho_api.executar("GoogleApiWrapper.buscar_resposta()")
+        desempenho_api.registrar(self._banco, "Respondendo pergunta")
+        dados: dict = desempenho_api.buscar_resultado()
     
         resposta = dados["resposta"]
         resposta_str = resposta.content
