@@ -39,7 +39,7 @@ class Prompt:
             dados["timestamp_depois"],
             dados["diferenca_ms"],
         )
-        self._banco.registrar_request(resultadosJson, dados["comando"])
+        # self._banco.registrar_request(resultadosJson, dados["comando"])
         
         return self.newlineParaBr(resultadosJson)
     

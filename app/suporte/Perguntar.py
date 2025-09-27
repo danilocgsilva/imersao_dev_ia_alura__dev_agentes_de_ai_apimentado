@@ -9,7 +9,23 @@ class Perguntar:
         self._gaw = gaw
     
     def perguntar(self, pergunta: str, temperatura: float = 0.1, modelo: str = "gemini-2.5-flash") -> str:
-        dados: dict = self._gaw.buscar_resposta(pergunta, temperatura, modelo)
+        
+        self._gaw.pergunta = pergunta
+        self._gaw.temperatura = temperatura 
+        self._gaw.modelo = modelo
+        
+        # dados: dict = self._gaw.buscar_resposta(pergunta, temperatura, modelo)
+        dados: dict = self._gaw.buscar_resposta()
+        
+        # raise Exception("Para aqui 5")
+        
+        # print("----")
+        # print(dados)
+        # print("----")
+        
+        # raise Exception("Para aqui 4")
+        
+        
         resposta = dados["resposta"]
         resposta_str = resposta.content
         
@@ -22,6 +38,6 @@ class Perguntar:
             dados["timestamp_depois"],
             dados["diferenca_ms"],
         )
-        self._banco.registrar_request(resposta, dados["comando"])
+        # self._banco.registrar_request(resposta, dados["comando"])
         
         return resposta_str

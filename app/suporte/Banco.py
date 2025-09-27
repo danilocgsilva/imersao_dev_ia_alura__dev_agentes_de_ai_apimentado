@@ -65,10 +65,10 @@ class Banco:
             self._loginfo(f"Modelo {modelo.name} registrado em banco")
             loop_modelos += 1
             
-    def registrar_request(self, conteudo, comando):
-        self.nome_banco = os.environ.get("NOME_BANCO")
-        conteudo_serializado = Utilidades.serializar(conteudo)
-        self.executar_sql(f"INSERT INTO busca_api (comando, retorno_serializado) VALUES (%s, %s);", (comando, conteudo_serializado,))
+    # def registrar_request(self, conteudo, comando):
+    #     self.nome_banco = os.environ.get("NOME_BANCO")
+    #     conteudo_serializado = Utilidades.serializar(conteudo)
+    #     self.executar_sql(f"INSERT INTO busca_api (comando, retorno_serializado) VALUES (%s, %s);", (comando, conteudo_serializado,))
         
     def salvar_modelo(self, modelo, id_registro_request: int):
         self.nome_banco = os.environ.get("NOME_BANCO")
