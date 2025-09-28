@@ -61,15 +61,19 @@ class GoogleApiWrapper:
     def getLLM(self, temperatura: float = 0.1, modelo: str = None) -> ChatGoogleGenerativeAI:
         if modelo is not None:
             self._modelo = modelo
+        else:
+            self._modelo = self._modelo_padrao
             
         if temperatura is not None:
             self._temperatura = temperatura
-            
+        
+        
         llm = ChatGoogleGenerativeAI(
             model=self._modelo, 
             google_api_key=self._chave_google,
             temperature=self._temperatura
         )
+        
         return llm     
     
     def buscar_resposta(

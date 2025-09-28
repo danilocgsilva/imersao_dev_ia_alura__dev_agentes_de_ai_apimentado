@@ -31,6 +31,8 @@ def rag_enviar():
     contar_desempenho_pergunta.pergunta = pergunta
     contar_desempenho_pergunta.executar()
     
+    # raise Exception("Parado 17")
+    
     banco = Banco()
     banco.registrar_pergunta(pergunta)
     id_pergunta = banco.ultimo_id_inserido
@@ -39,9 +41,6 @@ def rag_enviar():
     banco.registrar_resposta(
         resposta=contar_desempenho_pergunta.resposta,
         id_pergunta=id_pergunta,
-        resposta_cheia=Utilidades.serializar(dados_desempenho["resposta"]),
-        modelo_utilizado="",
-        temperatura="",
         timestamp_antes=dados_desempenho["timestamp_antes"],
         timestamp_depois=dados_desempenho["timestamp_depois"],
         diferenca_ms=dados_desempenho["diferenca_ms"]
