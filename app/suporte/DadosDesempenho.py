@@ -20,7 +20,7 @@ class DadosDesempenho:
         
         resposta = None
         comando = None
-        if self._system_prompt == "":
+        if self._system_prompt == "" or self._system_prompt == None:
             resposta = self._llm.invoke(pergunta)
             comando = "ChatGoogleGenerativeAI().invoke(<pergunta>)"
         else:
