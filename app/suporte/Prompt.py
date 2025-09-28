@@ -21,9 +21,7 @@ class Prompt:
         self._temperatura = temperatura
         
     def triagemJson(self, mensagem_humana: str):
-        # raise Exception("Parada 6")
         dados = self.triagem(mensagem_humana)
-        # raise Exception("Parada 7")
         
         resultados = dados["resposta"].model_dump()
         
@@ -32,16 +30,12 @@ class Prompt:
         self._banco.registrar_pergunta(mensagem_humana)
         id_pergunta = self._banco.ultimo_id_inserido
         self._banco.registrar_resposta(
-            resultadosJson, 
-            id_pergunta, 
-            resultados, 
-            dados["temperatura"], 
-            dados["modelo_utilizado"],
-            dados["timestamp_antes"],
-            dados["timestamp_depois"],
-            dados["diferenca_ms"],
+            id_pergunta = id_pergunta, 
+            resposta = resultadosJson, 
+            timestamp_antes = dados["timestamp_antes"],
+            timestamp_depois = dados["timestamp_depois"],
+            diferenca_ms = dados["diferenca_ms"],
         )
-        # self._banco.registrar_request(resultadosJson, dados["comando"])
         
         return self.newlineParaBr(resultadosJson)
     
@@ -51,17 +45,7 @@ class Prompt:
         self._gaw.temperatura = self._temperatura
         self._gaw.system_prompt = self._system_prompt
         
-        # raise Exception("Parada 7")
-        
-        # dados: dict = self._gaw.buscar_resposta(
-        #     mensagem_humana,
-        #     self._temperatura,
-        #     system_prompt = self._system_prompt
-        # )
-        
         dados: dict = self._gaw.buscar_resposta()
-        
-        # raise Exception("Parada 8")
         
         return dados
     

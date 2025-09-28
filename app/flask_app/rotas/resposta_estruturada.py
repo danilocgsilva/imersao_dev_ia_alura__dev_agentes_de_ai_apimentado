@@ -24,8 +24,6 @@ def enviar_prompt():
     elif tipo_pergunta == "pergunta_modelo":
         pergunta = pergunta_modelo
         
-    # raise Exception("Terminar 5")
-        
     prompt = Prompt(
         prompt, 
         Banco(),
@@ -33,12 +31,8 @@ def enviar_prompt():
         modelo
     )
     
-    # raise Exception("Parar 2")
-        
     resultado_prompt = prompt.triagemJson(pergunta)
     
-    # raise Exception("Parar 3")
-
     return {
         "resposta": resultado_prompt
     }
