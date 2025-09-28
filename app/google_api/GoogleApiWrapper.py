@@ -96,8 +96,6 @@ class GoogleApiWrapper:
         
         if system_prompt is not None:
             self._system_prompt = system_prompt
-            
-   
         
         llm = self.getLLM(temperatura)
         

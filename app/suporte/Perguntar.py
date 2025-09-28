@@ -31,6 +31,5 @@ class Perguntar:
             dados["timestamp_depois"],
             dados["diferenca_ms"],
         )
-        # self._banco.registrar_request(resposta, dados["comando"])
         
         return resposta_str

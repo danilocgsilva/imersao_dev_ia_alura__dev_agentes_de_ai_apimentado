@@ -55,6 +55,7 @@ class ContarDesempenhoPergunta:
             self._objeto_dominio.setUp()
             self._raw_resposta = self._objeto_dominio.perguntar_politica_rag(self._pergunta)
             self._resposta = self._raw_resposta["answer"]
+            self._escrever_dados_pergunta_log()
         else:
             raise Exception("O objeto de domínio não é reconhecido.")
         self._timestamp_final = time.time_ns()
@@ -63,7 +64,14 @@ class ContarDesempenhoPergunta:
     def buscar_resposta(self) -> str:
         return self._resposta
     
-    def escrever_dados_pergunta_log(self)
+    def _escrever_dados_pergunta_log(self):
+        pergunta_string = f"PERGUNTA: {self._pergunta}"
+        resposta_string = f"RESPOSTA: {self._raw_resposta['answer']}"
+        citacoes = f"CITAÇÕES: {self._raw_resposta['citacoes']}"
+        self._logger.info("-" * 30)
+        self._logger.info(pergunta_string)
+        self._logger.info(resposta_string)
+        self._logger.info(citacoes)
     
     @property
     def dados_desempenho(self):

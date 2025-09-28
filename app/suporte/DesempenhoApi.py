@@ -57,8 +57,6 @@ class DesempenhoApi:
             if self._modelo == None:
                 raise Exception("O modelo não foi definido.")
             self._googe_api_wrapper_buscar_resposta()
-            # raise Exception("Parada 11")
-            
             
         self._timestamp_final = time.time_ns() / 1_000_000
         self._tempo_transcorrido = self._timestamp_final - self._timestamp_inicio
@@ -72,4 +70,3 @@ class DesempenhoApi:
     def _googe_api_wrapper_buscar_resposta(self):
         self._response = self._objeto_dominio.buscar_resposta()
         
-    
