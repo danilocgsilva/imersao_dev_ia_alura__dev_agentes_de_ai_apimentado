@@ -11,6 +11,7 @@ class GoogleApiWrapper:
         self._temperatura = 0.1
         self._pergunta = None
         self._modelo = None
+        self._system_prompt = None
         
     @property
     def pergunta(self) -> str:
@@ -36,6 +37,14 @@ class GoogleApiWrapper:
     def modelo(self, modelo: str):
         self._modelo = modelo
     
+    @property
+    def system_prompt(self) -> str:
+        return self._system_prompt
+    
+    @system_prompt.setter
+    def system_prompt(self, system_prompt: str):
+        self._system_prompt = system_prompt
+    
     def getModels(self, banco: Banco = None) -> list:
         genai.configure(api_key=self._chave_google)
         
@@ -56,11 +65,6 @@ class GoogleApiWrapper:
         if temperatura is not None:
             self._temperatura = temperatura
             
-        print("-----")
-        print(self._modelo)
-        print(self._temperatura)
-        print("-----")
-        
         llm = ChatGoogleGenerativeAI(
             model=self._modelo, 
             google_api_key=self._chave_google,
@@ -72,9 +76,8 @@ class GoogleApiWrapper:
         self, 
         pergunta: str = None, 
         temperatura: float = None, 
-        # modelo: str = "gemini-2.5-flash",
         modelo: str = None,
-        system_prompt: str = ""
+        system_prompt: str = None
     ):
         if temperatura is not None:
             self._temperatura = temperatura
@@ -84,18 +87,26 @@ class GoogleApiWrapper:
             
         if modelo is not None:
             self._modelo = modelo
+        else:
+            self._modelo = self._modelo_padrao
+        
+        if system_prompt is not None:
+            self._system_prompt = system_prompt
             
+        print("----")
+        print(self._temperatura)
+        print(self._pergunta)
+        print(self._modelo)
+        print(self._system_prompt)
+        print("----")
             
         llm = self.getLLM(temperatura)
-        # raise Exception("Para aqui2")
         
         dados_desempenho = DadosDesempenho(
             llm,
             self._temperatura,
             self._modelo,
-            system_prompt
+            self._system_prompt
         )
-        
-        # raise Exception("Para aqui 3")
         
         return dados_desempenho.invoke(self._pergunta)

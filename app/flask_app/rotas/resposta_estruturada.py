@@ -24,14 +24,20 @@ def enviar_prompt():
     elif tipo_pergunta == "pergunta_modelo":
         pergunta = pergunta_modelo
         
+    # raise Exception("Terminar 5")
+        
     prompt = Prompt(
         prompt, 
         Banco(),
         GoogleApiWrapper(SupportFactory.buscar_chave_google()),
         modelo
     )
+    
+    # raise Exception("Parar 2")
         
     resultado_prompt = prompt.triagemJson(pergunta)
+    
+    # raise Exception("Parar 3")
 
     return {
         "resposta": resultado_prompt

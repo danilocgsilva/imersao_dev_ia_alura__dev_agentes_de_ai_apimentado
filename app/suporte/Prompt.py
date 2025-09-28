@@ -21,7 +21,9 @@ class Prompt:
         self._temperatura = temperatura
         
     def triagemJson(self, mensagem_humana: str):
+        # raise Exception("Parada 6")
         dados = self.triagem(mensagem_humana)
+        # raise Exception("Parada 7")
         
         resultados = dados["resposta"].model_dump()
         
@@ -44,11 +46,23 @@ class Prompt:
         return self.newlineParaBr(resultadosJson)
     
     def triagem(self, mensagem_humana: str) -> dict:
-        dados: dict = self._gaw.buscar_resposta(
-            mensagem_humana,
-            self._temperatura,
-            system_prompt = self._system_prompt
-        )
+        
+        self._gaw.pergunta = mensagem_humana
+        self._gaw.temperatura = self._temperatura
+        self._gaw.system_prompt = self._system_prompt
+        
+        # raise Exception("Parada 7")
+        
+        # dados: dict = self._gaw.buscar_resposta(
+        #     mensagem_humana,
+        #     self._temperatura,
+        #     system_prompt = self._system_prompt
+        # )
+        
+        dados: dict = self._gaw.buscar_resposta()
+        
+        # raise Exception("Parada 8")
+        
         return dados
     
     def get_triagem_chain(self):
