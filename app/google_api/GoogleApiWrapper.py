@@ -97,16 +97,8 @@ class GoogleApiWrapper:
         if system_prompt is not None:
             self._system_prompt = system_prompt
             
-            
-        print("----")
-        print(self._temperatura)
-        print(self._pergunta)
-        print(self._modelo)
-        print(self._system_prompt)
-        print("----")
+   
         
-        # raise Exception("Parada 13")
-            
         llm = self.getLLM(temperatura)
         
         dados_desempenho = DadosDesempenho(

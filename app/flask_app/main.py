@@ -31,8 +31,6 @@ def rag_enviar():
     contar_desempenho_pergunta.pergunta = pergunta
     contar_desempenho_pergunta.executar()
     
-    # raise Exception("Parado 17")
-    
     banco = Banco()
     banco.registrar_pergunta(pergunta)
     id_pergunta = banco.ultimo_id_inserido

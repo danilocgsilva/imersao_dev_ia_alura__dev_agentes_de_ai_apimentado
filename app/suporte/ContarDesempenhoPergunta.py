@@ -1,4 +1,5 @@
 import time
+from suporte.SupportFactory import SupportFactory
 
 class ContarDesempenhoPergunta:
     def __init__(self, objeto_dominio):
@@ -11,6 +12,7 @@ class ContarDesempenhoPergunta:
         self._timestamp_inicio = None
         self._timestamp_final = None
         self._tempo_transcorrido = None
+        self._logger = SupportFactory.getLogger()
         
     @property
     def temperatura(self) -> float:
@@ -60,6 +62,8 @@ class ContarDesempenhoPergunta:
         
     def buscar_resposta(self) -> str:
         return self._resposta
+    
+    def escrever_dados_pergunta_log(self)
     
     @property
     def dados_desempenho(self):
