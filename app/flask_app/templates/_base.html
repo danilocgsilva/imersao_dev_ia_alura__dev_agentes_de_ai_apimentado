@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ view_model.titulo_pagina }}</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    {% if view_model.javascript %}
-        <script defer src="{{ url_for('static', filename=view_model.nome_pagina) ~ '.js' }}"></script>
-    {% endif %}
+    {% for script in view_model.javascripts %}
+        <script defer src="{{ url_for('static', filename=script) ~ '.js' }}"></script>
+    {% endfor %}
     {% for stylesheet in view_model.stylesheets %}
         <link rel="stylesheet" href="{{ stylesheet }}">
     {% endfor %}

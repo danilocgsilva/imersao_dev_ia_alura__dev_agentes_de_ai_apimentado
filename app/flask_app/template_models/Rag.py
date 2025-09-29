@@ -15,6 +15,7 @@ class Rag(BaseModel):
         self._nome_pagina_amigavel = "Rag"
         self._lista_perguntas_modelo = self._busca_perguntas_modelo()
         self._lista_arquivos_rag = self._busca_lista_arquivos_rag()
+        self._javascripts = ["rag", "rag_drag_and_drop"]
         
     def _buscar_modelos(self):
         banco = Banco()
@@ -32,8 +33,11 @@ class Rag(BaseModel):
         return perguntas
     
     def _busca_lista_arquivos_rag(self):
-        rag_path = os.path.join(current_app.root_path, 'documentos_rag', 'fixos')
-        return os.listdir(rag_path)
+        rag_path_fixos = os.path.join(current_app.root_path, 'documentos_rag', 'fixos')
+        rag_path_dinamicos = os.path.join(current_app.root_path, 'documentos_rag', 'dinamicos')
+        listagem_arquivos_fixos = os.listdir(rag_path_fixos)
+        listagem_arquivos_dinamicos = os.listdir(rag_path_dinamicos)
+        return listagem_arquivos_fixos + listagem_arquivos_dinamicos
     
     @property
     def lista_modelos(self):
@@ -42,9 +46,6 @@ class Rag(BaseModel):
     @property
     def lista_perguntas_modelo(self):
         return self._lista_perguntas_modelo
-    
-    def javascript(self):
-        return None
     
     @property
     def lista_arquivos_rag(self):

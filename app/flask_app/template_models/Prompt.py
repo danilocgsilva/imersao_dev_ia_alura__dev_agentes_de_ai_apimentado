@@ -10,7 +10,7 @@ class Prompt(BaseModel):
         self._h1 = "Prepare um prompt"
         self._lista_modelos = self._buscar_modelos()
         self._nome_pagina = "prompt"
-        self._javascript = "prompt"
+        self._javascripts = ["prompt"]
         self._nome_pagina_amigavel = "Resposta estruturada"
         self._lista_perguntas_modelo = self._busca_perguntas_modelo()
         

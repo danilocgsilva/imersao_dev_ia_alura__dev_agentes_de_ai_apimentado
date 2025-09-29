@@ -4,7 +4,7 @@ class BaseModel:
         self._nome_app = ""
         self._h1 = ""
         self._nome_pagina = ""
-        self._javascript = ""
+        self._javascripts = []
         self._nome_pagina_amigavel = ""
     
     @property
@@ -28,8 +28,8 @@ class BaseModel:
         return self._nome_pagina_amigavel
     
     @property
-    def javascript(self):
-        return self._javascript
+    def javascripts(self) -> list:
+        return self._javascripts
     
     @property
     def stylesheets(self) -> list:

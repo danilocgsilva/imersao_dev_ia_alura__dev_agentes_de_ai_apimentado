@@ -110,11 +110,12 @@ def upload_file():
     
     if file and _allowed_file(file.filename):
         filename = file.filename
-        file.save(os.path.dirname(__file__), '..', 'documentos_rag', 'dinamicos')
+        documentos_path = os.path.join(os.path.dirname(__file__), '..', 'documentos_rag', 'dinamicos')
+        file.save(os.path.join(documentos_path, filename))
         flash(f'Arquivo {filename} enviado com sucesso!', 'success')
         return redirect(url_for('rag.rag'))
     else:
-        flash('Tipo de arquivo inválid. Aceito apenas: ' + ', '.join(ALLOWED_EXTENSIONS), 'error')
+        flash('Tipo de arquivo inválido. Aceito apenas: ' + ', '.join(ALLOWED_EXTENSIONS), 'error')
         return redirect(request.url)
 
 

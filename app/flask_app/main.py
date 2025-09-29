@@ -5,6 +5,8 @@ from flask_app.rotas.rag import rag
 from suporte.Banco import Banco
 
 web_framework = Flask(__name__)
+web_framework.secret_key = '45638a90-23f1-47a1-b0a0-57465d954172'
+
 route_root = Blueprint('route_root', __name__)
 
 web_framework.register_blueprint(route_root)

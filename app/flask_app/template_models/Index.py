@@ -9,7 +9,7 @@ class Index(BaseModel):
         self._h1 = "Faça uma pergunta para a IA"
         self._lista_modelos = self._buscar_modelos()
         self._nome_pagina = "perguntar"
-        self._javascript = "perguntar"
+        self._javascripts = ["perguntar"]
         self._nome_pagina_amigavel = "Faça uma pergunta"
         
     @property
