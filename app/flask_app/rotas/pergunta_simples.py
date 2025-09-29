@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request
 from flask_app.template_models.Index import Index
 import markdown
 from suporte.Perguntar import Perguntar

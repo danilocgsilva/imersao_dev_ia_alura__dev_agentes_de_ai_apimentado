@@ -30,7 +30,7 @@
                 <div class="hidden md:flex space-x-6">
                     <a href="{{ url_for('pergunta_simples.perguntar') }}" class="hover:text-blue-200 transition">Faça uma pergunta</a>
                     <a href="{{ url_for('resposta_estruturada.prompt') }}" class="hover:text-blue-200 transition">Resposta Estruturada</a>
-                    <a href="{{ url_for('rag') }}" class="hover:text-blue-200 transition">Rag</a>
+                    <a href="{{ url_for('rag.rag') }}" class="hover:text-blue-200 transition">Rag</a>
                     <a href="#" class="hover:text-blue-200 transition">Contact</a>
                 </div>
             </div>
@@ -38,7 +38,7 @@
             <div id="mobile-menu" class="hidden pb-4 md:hidden">
                 <a href="{{ url_for('pergunta_simples.perguntar') }}" class="block py-2 hover:bg-blue-500 px-4 rounded transition">Faça uma pergunta</a>
                 <a href="{{ url_for('resposta_estruturada.prompt') }}" class="block py-2 hover:bg-blue-500 px-4 rounded transition">Resposta Estruturada</a>
-                <a href="{{ url_for('rag') }}" class="block py-2 hover:bg-blue-500 px-4 rounded transition">Rag</a>
+                <a href="{{ url_for('rag.rag') }}" class="block py-2 hover:bg-blue-500 px-4 rounded transition">Rag</a>
                 <a href="#" class="block py-2 hover:bg-blue-500 px-4 rounded transition">Contact</a>
             </div>
         </div>

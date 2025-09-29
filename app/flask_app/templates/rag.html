@@ -105,9 +105,9 @@
                             <button class="action-btn text-yellow-500" title="Disable">
                                 <i class="fas fa-ban"></i>
                             </button>
-                            <button class="action-btn text-green-500" title="Download">
+                            <a href="{{ url_for('rag.download_documento_rag', filename=arquivo_rag) }}" class="action-btn text-green-500" title="Download">
                                 <i class="fas fa-download"></i>
-                            </button>
+                            </a>
                         </div>
                     </div>
                     {% endfor %}

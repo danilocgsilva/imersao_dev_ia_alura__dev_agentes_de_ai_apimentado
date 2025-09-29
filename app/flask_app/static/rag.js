@@ -145,8 +145,6 @@ function atribuir_acoes_listagem_arquivos_rag() {
                     this.innerHTML = '<i class="fas fa-ban"></i>';
                     this.closest('.entry-item').style.opacity = '1';
                 }
-            } else if (action === 'Download') {
-                alert(`Downloading "${fileName}"...`);
             }
         });
     });

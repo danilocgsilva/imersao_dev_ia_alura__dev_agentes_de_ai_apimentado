@@ -67,7 +67,6 @@ class GoogleApiWrapper:
         if temperatura is not None:
             self._temperatura = temperatura
         
-        
         llm = ChatGoogleGenerativeAI(
             model=self._modelo, 
             google_api_key=self._chave_google,
