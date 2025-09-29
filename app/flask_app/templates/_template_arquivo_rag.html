@@ -4,7 +4,7 @@
         <button class="action-btn text-red-500" title="Delete">
             <i class="fas fa-trash"></i>
         </button>
-        <a href="#" class="action-btn text-yellow-500" title="Disable">
+        <a href="#" class="action-btn text-yellow-500" title="{{ 'Disable' if arquivo_e_ativo(arquivo_rag) else 'Enable'}}">
             {{ '<i class="fas fa-ban"></i>'|safe if arquivo_e_ativo(arquivo_rag) else '<i class="fas fa-check-circle"></i>'|safe }}
         </a>
         <a href="{{ url_for('rag.download_documento_rag', filename=arquivo_rag) }}" target="_blank" class="action-btn text-green-500" title="Download">

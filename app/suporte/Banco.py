@@ -182,6 +182,14 @@ class Banco:
             arquivo_achado = resultados[0]
             return arquivo_achado[1] == 1
         return False
+    
+    def buscar_configuracoes(self):
+        self.nome_banco = os.environ.get("NOME_BANCO")
+        query_busca = "SELECT arquivo, ativo FROM configuracoes;"
+        resultados = self.executar_sql(query_busca)
+        if resultados:
+            return resultados
+        return []
                     
     def _loginfo(self, mensagem):
         if self._logger:
