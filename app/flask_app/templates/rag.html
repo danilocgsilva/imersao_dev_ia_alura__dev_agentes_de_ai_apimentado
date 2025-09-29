@@ -3,6 +3,17 @@
 {% block content %}
 
 <div class="max-w-4xl mx-auto px-4 py-8">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+            <div
+                class="mb-6 p-4 rounded-lg {% if category == 'error' %}bg-red-50 text-red-700 border border-red-200{% else %}bg-green-50 text-green-700 border border-green-200{% endif %}">
+                {{ message }}
+            </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
     <h1 class="text-3xl font-bold text-center text-gray-800 mb-8">{{ view_model.h1 }}</h1>
 
     <div class="bg-white rounded-lg shadow-md p-6 mb-8">
@@ -102,21 +113,9 @@
         </div>
 
         <div class="my-8">
-            <!-- Flash Messages -->
-            {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-            {% for category, message in messages %}
-            <div
-                class="mb-6 p-4 rounded-lg {% if category == 'error' %}bg-red-50 text-red-700 border border-red-200{% else %}bg-green-50 text-green-700 border border-green-200{% endif %}">
-                {{ message }}
-            </div>
-            {% endfor %}
-            {% endif %}
-            {% endwith %}
 
-            <!-- Upload Form -->
-            <form action="{{ url_for('rag.envio_de_arquivo') }}" method="post" enctype="multipart/form-data" class="space-y-6">
-                <!-- File Input -->
+            <form action="{{ url_for('rag.envio_de_arquivo') }}" method="post" enctype="multipart/form-data"
+                class="space-y-6">
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-2">
                         Selecione um arquivo
@@ -145,12 +144,10 @@
                     </div>
                 </div>
 
-                <!-- File Name Display -->
                 <div id="file-name" class="hidden text-sm text-gray-600 bg-gray-50 p-3 rounded-lg">
                     Arquivo selecionado: <span class="font-medium" id="selected-file-name"></span>
                 </div>
 
-                <!-- Submit Button -->
                 <div>
                     <button type="submit"
                         class="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200">
@@ -159,7 +156,6 @@
                 </div>
             </form>
         </div>
-
 
     </div>
 </div>

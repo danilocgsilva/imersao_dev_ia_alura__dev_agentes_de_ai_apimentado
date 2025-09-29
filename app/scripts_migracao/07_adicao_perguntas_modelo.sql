@@ -2,10 +2,10 @@ INSERT INTO perguntas_modelo (
     pergunta
 ) VALUES
     ("Qual é a capital da França?"),
-    ("Qual é a capital da Itália?"),
     ("Posso reembolsar a internet?"),
     ("Qual é a capital da Itália?"),
     ("Posso reembolsar a internet?"),
+    ("Posso reembolsar eventuais refeições quando eu estiver em viagem?"),
     ("Quero mais 5 dias de trabalho remoto. Como faço?"),
     ("Posso reembolsar cursos ou treinamentos da Alura"),
     ("Quantas capivaras tem no rio Pinheiros?"),

@@ -1,5 +1,6 @@
 from suporte.Banco import Banco
 from suporte.SupportFactory import SupportFactory
+from suporte.ArquivoRag import ArquivoRag
 from flask_app.template_models.BaseModel import BaseModel
 from flask import url_for, current_app
 import os
@@ -32,12 +33,15 @@ class Rag(BaseModel):
             return []
         return perguntas
     
-    def _busca_lista_arquivos_rag(self):
+    def _busca_lista_arquivos_rag(self) -> list:
         rag_path_fixos = os.path.join(current_app.root_path, 'documentos_rag', 'fixos')
         rag_path_dinamicos = os.path.join(current_app.root_path, 'documentos_rag', 'dinamicos')
-        listagem_arquivos_fixos = os.listdir(rag_path_fixos)
-        listagem_arquivos_dinamicos = os.listdir(rag_path_dinamicos)
-        return listagem_arquivos_fixos + listagem_arquivos_dinamicos
+        arquivos = []
+        for arquivo_fixo in os.listdir(rag_path_fixos):
+            arquivos.append(ArquivoRag(arquivo_fixo, True))
+        for arquivo_dinamico in os.listdir(rag_path_dinamicos):
+            arquivos.append(ArquivoRag(arquivo_dinamico, False))
+        return arquivos
     
     @property
     def lista_modelos(self):

@@ -87,7 +87,7 @@ class Rag(AppRootBase):
         lista_documentos_rag = ListaDocumentosRag().documentos
         for documento_nome in lista_documentos_rag:
             try:
-                loader = PyMuPDFLoader(os.path.join(self.app_root, 'flask_app', 'documentos_rag', 'fixos', documento_nome))
+                loader = PyMuPDFLoader(os.path.join(self.app_root, 'flask_app', 'documentos_rag', documento_nome))
                 self._documentos_carregados.extend(loader.load())
                 self._logger.info(f"Documento {documento_nome} carregado com sucesso.")
             except Exception as e:

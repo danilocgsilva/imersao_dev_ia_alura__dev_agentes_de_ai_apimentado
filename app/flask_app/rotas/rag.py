@@ -41,13 +41,15 @@ def rag_enviar():
         "resposta": contar_desempenho_pergunta.resposta
     }
 
-@rag.route('/rag/download/<filename>', endpoint="download_documento_rag", methods=['GET'])
-def download_arquivo_rag(filename):
+@rag.route('/rag/download/<filename>/<fixo>', endpoint="download_documento_rag", methods=['GET'])
+def download_arquivo_rag(filename, fixo):
     try:
         if '..' in filename or filename.startswith('/'):
             abort(400)
-            
-        documentos_path = os.path.join(os.path.dirname(__file__), '..', 'documentos_rag', 'fixos')
+        
+        diretorio_sufixo = 'fixos' if fixo == '1' else 'dinamicos'
+        
+        documentos_path = os.path.join(os.path.dirname(__file__), '..', 'documentos_rag', diretorio_sufixo)
         if not os.path.exists(os.path.join(documentos_path, filename)):
             abort(404)
         return send_from_directory(documentos_path, filename)
@@ -118,6 +120,11 @@ def upload_file():
         flash('Tipo de arquivo inválido. Aceito apenas: ' + ', '.join(ALLOWED_EXTENSIONS), 'error')
         return redirect(request.url)
 
+@rag.route('/rag/arquivo/<arquivo>/deletar', endpoint='deletar_arquivo_rag', methods=['DELETE'])
+def deletar_arquivo(arquivo: str):
+    arquivo_caminho_total = os.path.join(os.path.dirname(__file__), '..', 'documentos_rag', 'dinamicos', arquivo)
+    os.remove(arquivo_caminho_total)
+    return redirect(url_for('rag.rag'))
 
 def _allowed_file(filename):
     return '.' in filename and \

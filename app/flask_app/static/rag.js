@@ -143,11 +143,15 @@ function atribuir_acoes_listagem_arquivos_rag() {
             const fileName = this.closest('.entry-item').querySelector('.nome-arquivo-rag').textContent;
 
             if (action === 'Delete') {
-                if (confirm(`Are you sure you want to delete "${fileName}"?`)) {
-                    this.closest('.entry-item').style.opacity = '0.5';
-                    setTimeout(() => {
-                        this.closest('.entry-item').remove();
-                    }, 300);
+                if (confirm(`Tem certeza de que deseja deletar ${fileName}?`)) {
+                    const elemento_para_remover = this.closest('.entry-item');
+                    fetch(`/rag/arquivo/${fileName}/deletar`, {
+                        method: 'DELETE'
+                    }).then((event) => {
+                        elemento_para_remover.remove();
+                    }).catch((err) => {
+                        alert(`Não foi possível remover o arquivo: ${err}`)
+                    })
                 }
             } else if (action === 'Disable' || action === 'Enable') {
                 event.preventDefault();
