@@ -1,0 +1,14 @@
+<div class="px-6 py-4 entry-item flex justify-between items-center">
+    <div class="text-gray-900 font-medium nome-arquivo-rag" {{ 'style="opacity: 1.0"'|safe if arquivo_e_ativo(arquivo_rag) else 'style="opacity: 0.5"'|safe }} data-nome-arquivo="{{ arquivo_rag }}">{{ arquivo_rag }}</div>
+    <div class="flex space-x-3">
+        <button class="action-btn text-red-500" title="Delete">
+            <i class="fas fa-trash"></i>
+        </button>
+        <a href="#" class="action-btn text-yellow-500" title="Disable">
+            {{ '<i class="fas fa-ban"></i>'|safe if arquivo_e_ativo(arquivo_rag) else '<i class="fas fa-check-circle"></i>'|safe }}
+        </a>
+        <a href="{{ url_for('rag.download_documento_rag', filename=arquivo_rag) }}" class="action-btn text-green-500" title="Download">
+            <i class="fas fa-download"></i>
+        </a>
+    </div>
+</div>

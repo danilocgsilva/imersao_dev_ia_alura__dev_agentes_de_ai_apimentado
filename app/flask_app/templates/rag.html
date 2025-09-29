@@ -94,22 +94,8 @@
                 </div>
 
                 <div class="divide-y divide-gray-200">
-
                     {% for arquivo_rag in view_model.lista_arquivos_rag %}
-                    <div class="px-6 py-4 entry-item flex justify-between items-center">
-                        <div class="text-gray-900 font-medium">{{ arquivo_rag }}</div>
-                        <div class="flex space-x-3">
-                            <button class="action-btn text-red-500" title="Delete">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                            <button class="action-btn text-yellow-500" title="Disable">
-                                <i class="fas fa-ban"></i>
-                            </button>
-                            <a href="{{ url_for('rag.download_documento_rag', filename=arquivo_rag) }}" class="action-btn text-green-500" title="Download">
-                                <i class="fas fa-download"></i>
-                            </a>
-                        </div>
-                    </div>
+                        {% include('_template_arquivo_rag.html') %}
                     {% endfor %}
                 </div>
             </div>

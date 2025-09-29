@@ -53,4 +53,50 @@ def download_arquivo_rag(filename):
         logger.error(f"Erro ao baixar o arquivo {filename}: {e}")
         abort(500)
 
+@rag.route('/rag/arquivo/switch', endpoint="switch_arquivo", methods=['POST'])
+def ativar_arquivo():
+    try:
+        nome_arquivo = request.get_json().get('nome_arquivo')
+        if '..' in nome_arquivo or nome_arquivo.startswith('/'):
+            abort(400)
+        
+        print("---")
+        print(nome_arquivo)
+        print("---")
+      
+        documentos_path = os.path.join(os.path.dirname(__file__), '..', 'documentos_rag', 'fixos')
+        if not os.path.exists(os.path.join(documentos_path, nome_arquivo)):
+            abort(404)
+
+        banco = Banco()
+        banco.ativar_arquivo(nome_arquivo)
+
+        return {
+            "mensagem": "Arquivo ativado com sucesso"
+        }
+    except Exception as e:
+        logger = SupportFactory.getLogger()
+        logger.error(f"Erro ao ativar o arquivo {nome_arquivo}: {e}")
+        abort(500)
+        
+@rag.route('/rag/arquivo/<filename>/esta_ativo', endpoint="arquivo_esta_atvivo", methods=["GET"])
+def arquivo_esta_ativo(filename):
+    try:
+        if '..' in filename or filename.startswith('/'):
+            abort(400)
+
+        documentos_path = os.path.join(os.path.dirname(__file__), '..', 'documentos_rag', 'fixos')
+        if not os.path.exists(os.path.join(documentos_path, filename)):
+            abort(404)
+
+        # banco = Banco()
+        # esta_ativo = banco.arquivo_esta_ativo(filename)
+
+        return {
+            "esta_ativo": True
+        }
+    except Exception as e:
+        logger = SupportFactory.getLogger()
+        logger.error(f"Erro ao verificar se o arquivo {filename} está ativo: {e}")
+        abort(500)
 

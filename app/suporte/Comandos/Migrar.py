@@ -24,6 +24,8 @@ class Migrar(ComandoBase):
         self._executar_sql_com_stdout(banco, "scripts_migracao/06_tabela_perguntas_modelo.sql")
         self._executar_sql_com_stdout(banco, "scripts_migracao/07_adicao_perguntas_modelo.sql")
         self._executar_sql_com_stdout(banco, "scripts_migracao/08_registro_modelo_utilizado_api.sql")
+        self._executar_sql_com_stdout(banco, "scripts_migracao/09_tabela_configuacoes.sql")
+        self._executar_sql_com_stdout(banco, "scripts_migracao/10_adicao_arquivos_rag_fixos.sql")
         
         self._loginfo("Migração do banco terminada.")
     

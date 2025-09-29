@@ -29,6 +29,20 @@ function controla_campos_pergunta() {
     }
 }
 
+async function ativar_desativar_arquivo(fileName) {
+    const response = await fetch(`/rag/arquivo/switch`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            "nome_arquivo": fileName
+        })
+    });
+
+    return response;
+}
+
 const animacao_espera = {
     contador: 0,
     id_intervalo: null,
@@ -39,7 +53,7 @@ const animacao_espera = {
         botao_perguntar.classList.add("disabled:cursor-not-allowed");
         botao_perguntar.classList.add("disabled:opacity-75");
         botao_perguntar.disabled = true;
-        
+
         resultados.style.fontSize = "200%";
 
         this.contador = 0;
@@ -75,7 +89,7 @@ const animacao_espera = {
 
 function Formulario() {
     this.formulario = document.getElementById('formulario');
-    this.inicializar =  function () {
+    this.inicializar = function () {
         this._pergunta = "";
         this.formulario.addEventListener('submit', async function (e) {
             e.preventDefault();
@@ -124,9 +138,9 @@ function Formulario() {
 
 function atribuir_acoes_listagem_arquivos_rag() {
     lista_botoes_acoes.forEach(button => {
-        button.addEventListener('click', function () {
+        button.addEventListener('click', async function (event) {
             const action = this.title;
-            const fileName = this.closest('.entry-item').querySelector('.text-gray-900').textContent;
+            const fileName = this.closest('.entry-item').querySelector('.nome-arquivo-rag').textContent;
 
             if (action === 'Delete') {
                 if (confirm(`Are you sure you want to delete "${fileName}"?`)) {
@@ -136,14 +150,20 @@ function atribuir_acoes_listagem_arquivos_rag() {
                     }, 300);
                 }
             } else if (action === 'Disable' || action === 'Enable') {
-                if (action === 'Disable') {
-                    this.title = 'Enable';
-                    this.innerHTML = '<i class="fas fa-check-circle"></i>';
-                    this.closest('.entry-item').style.opacity = '0.6';
+                event.preventDefault();
+                const response = await ativar_desativar_arquivo(fileName);
+                if (response.ok) {
+                    if (action === 'Disable') {
+                        this.title = 'Enable';
+                        this.innerHTML = '<i class="fas fa-check-circle"></i>';
+                        this.closest('.entry-item').querySelector('.nome-arquivo-rag').style.opacity = '0.5';
+                    } else {
+                        this.title = 'Disable';
+                        this.innerHTML = '<i class="fas fa-ban"></i>';
+                        this.closest('.entry-item').querySelector('.nome-arquivo-rag').style.opacity = '1';
+                    }
                 } else {
-                    this.title = 'Disable';
-                    this.innerHTML = '<i class="fas fa-ban"></i>';
-                    this.closest('.entry-item').style.opacity = '1';
+                    alert("Houve um problema na api.")
                 }
             }
         });
@@ -154,7 +174,7 @@ controla_campos_pergunta();
 atribuir_acoes_listagem_arquivos_rag();
 const formulario = new Formulario();
 seletor_pergunta.forEach(radio => {
-    radio.addEventListener('change', function() {
+    radio.addEventListener('change', function () {
         controla_campos_pergunta();
     });
 })

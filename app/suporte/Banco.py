@@ -158,6 +158,30 @@ class Banco:
             query_insert,
             (contexto, data_inicio, data_fim, tempo_transcorrido, comando, retorno_serializado)
         )
+        
+    def ativar_arquivo(self, arquivo: str):
+        self.nome_banco = os.environ.get("NOME_BANCO")
+        query_busca = "SELECT arquivo, ativo FROM configuracoes WHERE arquivo = %s;"
+        resultados = self.executar_sql(query_busca, (arquivo,))
+        if resultados:
+            arquivo_achado = resultados[0]
+            query_update = ""
+            if arquivo_achado[1] == 1:
+                query_update = "UPDATE configuracoes SET ativo = 0 WHERE arquivo = %s;"
+            else:
+                query_update = "UPDATE configuracoes SET ativo = 1 WHERE arquivo = %s;"
+            self.executar_sql(query_update, (arquivo, ))
+        
+        
+    def arquivo_esta_ativo(self, arquivo: str):
+        self.nome_banco = os.environ.get("NOME_BANCO")
+        query_busca = "SELECT arquivo, ativo FROM configuracoes WHERE arquivo = %s;"
+        resultados = self.executar_sql(query_busca, (arquivo, ))
+        if resultados:
+            print(resultados)
+            arquivo_achado = resultados[0]
+            return arquivo_achado[1] == 1
+        return False
                     
     def _loginfo(self, mensagem):
         if self._logger:
