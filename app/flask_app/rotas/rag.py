@@ -1,12 +1,15 @@
-from flask import Blueprint, render_template, request, send_from_directory, abort
+from flask import Blueprint, render_template, request, send_from_directory, abort, redirect, flash, url_for
 from suporte.Banco import Banco
 from flask_app.template_models.Rag import Rag
 from suporte.Rag import Rag as RagDomain
 from suporte.ContarDesempenhoPergunta import ContarDesempenhoPergunta
 from suporte.SupportFactory import SupportFactory
 import os
+from werkzeug.utils import secure_filename
 
 rag = Blueprint('rag', __name__)
+
+ALLOWED_EXTENSIONS = {'pdf'}
 
 @rag.route('/rag', endpoint="rag", methods=['GET'])
 def rag_view():
@@ -59,11 +62,7 @@ def ativar_arquivo():
         nome_arquivo = request.get_json().get('nome_arquivo')
         if '..' in nome_arquivo or nome_arquivo.startswith('/'):
             abort(400)
-        
-        print("---")
-        print(nome_arquivo)
-        print("---")
-      
+    
         documentos_path = os.path.join(os.path.dirname(__file__), '..', 'documentos_rag', 'fixos')
         if not os.path.exists(os.path.join(documentos_path, nome_arquivo)):
             abort(404)
@@ -84,13 +83,10 @@ def arquivo_esta_ativo(filename):
     try:
         if '..' in filename or filename.startswith('/'):
             abort(400)
-
+            
         documentos_path = os.path.join(os.path.dirname(__file__), '..', 'documentos_rag', 'fixos')
         if not os.path.exists(os.path.join(documentos_path, filename)):
             abort(404)
-
-        # banco = Banco()
-        # esta_ativo = banco.arquivo_esta_ativo(filename)
 
         return {
             "esta_ativo": True
@@ -100,3 +96,28 @@ def arquivo_esta_ativo(filename):
         logger.error(f"Erro ao verificar se o arquivo {filename} está ativo: {e}")
         abort(500)
 
+@rag.route('/rag/arquivo/upload', endpoint="envio_de_arquivo", methods=['POST'])
+def upload_file():
+    if 'file' not in request.files:
+        flash('Não houve arquivo selecionado', 'error')
+        return redirect(request.url)
+    
+    file = request.files['file']
+    
+    if file.filename == '':
+        flash('Não houve arquivo selecionado', 'error')
+        return redirect(request.url)
+    
+    if file and _allowed_file(file.filename):
+        filename = file.filename
+        file.save(os.path.dirname(__file__), '..', 'documentos_rag', 'dinamicos')
+        flash(f'Arquivo {filename} enviado com sucesso!', 'success')
+        return redirect(url_for('rag.rag'))
+    else:
+        flash('Tipo de arquivo inválid. Aceito apenas: ' + ', '.join(ALLOWED_EXTENSIONS), 'error')
+        return redirect(request.url)
+
+
+def _allowed_file(filename):
+    return '.' in filename and \
+        filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
