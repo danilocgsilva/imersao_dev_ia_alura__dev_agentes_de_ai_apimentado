@@ -10,6 +10,7 @@ from suporte.Comandos.Rag.ListarDocumentosRag import ListarDocumentosRag
 from suporte.Comandos.Rag.VerChunksDocumentos import VerChunksDocumentos
 from suporte.Comandos.Rag.CarregarDocumentos import CarregarDocumentos
 from suporte.Comandos.Rag.PerguntarComRag import PerguntarComRag
+from suporte.Comandos.DesenharGrafo import DesenharGrafo
 import re
 
 def clean_filename(filename):
@@ -160,6 +161,10 @@ def main():
                 alterarOrdemModelo.modelo = args.modelo
                 alterarOrdemModelo.ordem = args.ordem
                 alterarOrdemModelo.executar()
+                
+        if args.comando == "desenhar_grafo":
+            comando = DesenharGrafo()
+            comando.executar()
             
         if args.comando == "ajuda":
             print("Comandos disponíveis:")

@@ -23,3 +23,6 @@ faiss-cpu
 
 # Leitura de PDF
 pymupdf
+
+# Langgraph
+langgraph
