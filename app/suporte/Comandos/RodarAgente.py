@@ -23,6 +23,19 @@ class RodarAgente(ComandoBase):
         if resposta_final.get("citacoes"):
             print("CITAÇÕES")
             for citacao in resposta_final.get("citacoes"):
-                print(f" - Documento: {citacao.get('documento')}, Página: {citacao.get('pagina')}")
-                print(f"   Trecho: {citacao.get('trecho')}")
+                documento_citacao = self._mostrar_metadata(citacao, "documento")
+                pagina_citacao =  self._mostrar_metadata(citacao, "pagina")
+                trecho = self._mostrar_metadata(citacao, "trecho")
+
+                print(f" - Documento: {documento_citacao}, Página: {pagina_citacao}")
+                print(f"   Trecho: {trecho}")
         print("-----------")
+
+    def _mostrar_metadata(self, citacao, metadata_amigavel: str):
+        if metadata_amigavel == "documento":
+            return citacao.metadata["source"]
+        if metadata_amigavel == "pagina":
+            return citacao.metadata["page"]
+        if metadata_amigavel == "trecho":
+            return citacao.page_content
+        raise Exception("Não é esperado essa chave de metadata.")

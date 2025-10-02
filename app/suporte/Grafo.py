@@ -3,6 +3,8 @@ from suporte.AgentState import AgentState
 from suporte.Prompt import Prompt
 from suporte.Rag import Rag
 from suporte.SupportFactory import SupportFactory
+from suporte.Banco import Banco
+from google_api.GoogleApiWrapper import GoogleApiWrapper
 
 class Grafo:
     def __init__(self):
@@ -52,6 +54,7 @@ class Grafo:
         print("Executando o nó de auto resolver...")
         pergunta = state["pergunta"]
         rag = Rag()
+        rag.setUp()
         resposta_rag = rag.perguntar_politica_rag(pergunta)
         
         update: AgentState = {
@@ -89,7 +92,7 @@ class Grafo:
             "acao_final": "ABRIR_CHAMADO"
         }
         
-    def _decidir_pos_triagem(state: AgentState) -> str:
+    def _decidir_pos_triagem(self, state: AgentState) -> str:
         print("Decidindo pós triagem...")
         decisao = state["triagem"]["decisao"]
         
@@ -100,7 +103,7 @@ class Grafo:
         if decisao == "ABRIR_CHAMADO":
             return "chamado"
         
-    def _decidir_pos_auto_resolver(state: AgentState) -> str:
+    def _decidir_pos_auto_resolver(self, state: AgentState) -> str:
         KEYWORDS_ABRIR_TICKET = ["aprovação", "exceção", "liberação", "abrir ticket", "abrir chamado", "acesso especial"]
         
         print("Decidindo após o auto_resolver...")
@@ -123,7 +126,9 @@ class Grafo:
         
     def _triagem(self, pergunta: str):
         prompt = Prompt(
-            
+            SupportFactory.buscar_prompt_sistema_padrao(),
+            Banco(),
+            GoogleApiWrapper(SupportFactory.buscar_chave_google())
         )
         dados = prompt.triagem(pergunta)
         return dados["resposta"].model_dump()
