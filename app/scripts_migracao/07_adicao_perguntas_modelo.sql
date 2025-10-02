@@ -9,4 +9,6 @@ INSERT INTO perguntas_modelo (
     ("Quero mais 5 dias de trabalho remoto. Como faço?"),
     ("Posso reembolsar cursos ou treinamentos da Alura"),
     ("Quantas capivaras tem no rio Pinheiros?"),
+    ("É possível reembolsar certificações do Google Cloud?"),
+    ("Posso obter o Google Gemini de graça?"),
     ("Estou precisando de um atendimento médico do meu plano de saúde e eles estão demorando para me responder. Poderia agilizar?");

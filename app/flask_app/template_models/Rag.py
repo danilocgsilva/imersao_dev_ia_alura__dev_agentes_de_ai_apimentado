@@ -40,6 +40,8 @@ class Rag(BaseModel):
         for arquivo_fixo in os.listdir(rag_path_fixos):
             arquivos.append(ArquivoRag(arquivo_fixo, True))
         for arquivo_dinamico in os.listdir(rag_path_dinamicos):
+            if arquivo_dinamico == ".gitkeep":
+                continue
             arquivos.append(ArquivoRag(arquivo_dinamico, False))
         return arquivos
     
