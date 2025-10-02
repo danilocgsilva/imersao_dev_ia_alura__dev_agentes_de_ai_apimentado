@@ -16,6 +16,6 @@ class RegistrarModelosDisponiveis(ComandoBase):
         banco.executar_sql("UPDATE modelos SET ordem = 0 WHERE nome = %s;", ("models/gemini-2.5-flash", ))
         print("Final do registro dos modelos")
     
-    def _log_e_print(mensagem: str):
+    def _log_e_print(self, mensagem: str):
         print(mensagem)
         self._loginfo(mensagem)

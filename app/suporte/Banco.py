@@ -110,7 +110,13 @@ class Banco:
     def registrar_pergunta(self, pergunta):
         self.nome_banco = os.environ.get("NOME_BANCO")
         self.executar_sql("INSERT INTO perguntas (pergunta) VALUES (%s)", (pergunta, ))
-        
+
+    def buscar_pergunta_padrao(self, id: int):
+        self.nome_banco = os.environ.get("NOME_BANCO")
+        query = "SELECT pergunta FROM perguntas_modelo WHERE id = %s;"
+        resultados = self.executar_sql(query, (id, ))
+        return None if resultados == None else resultados[0][0]
+
     def registrar_resposta(
         self, 
         resposta: str,

@@ -12,6 +12,8 @@ from suporte.Comandos.Rag.CarregarDocumentos import CarregarDocumentos
 from suporte.Comandos.Rag.PerguntarComRag import PerguntarComRag
 from suporte.Comandos.DesenharGrafo import DesenharGrafo
 from suporte.Comandos.ListarPerguntasPadrao import ListarPerguntasPadrao
+from suporte.Comandos.RodarAgente import RodarAgente
+from suporte.Banco import Banco
 import re
 
 def clean_filename(filename):
@@ -95,6 +97,12 @@ def main():
         help='Se deve retornar apenas o page_content para o comando ver_chunks_documentos',
         action='store_true'
     )
+    parser.add_argument(
+        '--id-pergunta-padrao',
+        help='O id da pergunta padrão para rodar o agente',
+        required=False,
+        default=""
+    )
     args = parser.parse_args()
     
     if args.comando in dict_pares_comando_classe or args.comando == "ajuda":
@@ -133,6 +141,16 @@ def main():
         if args.comando == "listar_perguntas_padrao":
             comando = ListarPerguntasPadrao()
             comando.executar()
+
+        if args.comando == "rodar_agente":
+            if args.id_pergunta_padrao == "":
+                print("Para o comando rodar_agente é necessário fornecer o id de uma pergunta padrão. Use o parâmetro --id-pergunta-padrao e coloque o id da pergunta padrão. Para ver as perguntas padrões disponíveis, execute o comando listar_perguntas_padrao.")
+            else:
+                banco = Banco()
+                pergunta = banco.buscar_pergunta_padrao(int(args.id_pergunta_padrao))
+                comando = RodarAgente()
+                comando.pergunta = pergunta
+                comando.executar()
             
         if args.comando == "perguntar":
             if args.pergunta == "":

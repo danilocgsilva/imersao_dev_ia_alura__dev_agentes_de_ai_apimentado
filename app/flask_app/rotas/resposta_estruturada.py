@@ -12,7 +12,7 @@ resposta_estruturada = Blueprint('resposta_estruturada', __name__)
 
 @resposta_estruturada.route('/enviar_prompt', endpoint="enviar_prompt", methods=['POST'])
 def enviar_prompt():
-    prompt = request.get_json().get('prompt')
+    prompt_usuario = request.get_json().get('prompt')
     modelo = request.get_json().get('modelo')
     pergunta_modelo = request.get_json().get('pergunta_modelo')
     tipo_pergunta = request.get_json().get('tipo_pergunta')
@@ -25,7 +25,7 @@ def enviar_prompt():
         pergunta = pergunta_modelo
         
     prompt = Prompt(
-        prompt, 
+        prompt_usuario, 
         Banco(),
         GoogleApiWrapper(SupportFactory.buscar_chave_google()),
         modelo

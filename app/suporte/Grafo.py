@@ -2,8 +2,12 @@ from langgraph.graph import StateGraph, END, START
 from suporte.AgentState import AgentState
 from suporte.Prompt import Prompt
 from suporte.Rag import Rag
+from suporte.SupportFactory import SupportFactory
 
 class Grafo:
+    def __init__(self):
+        self._logger = SupportFactory.getLogger()
+
     def buscar(self):
         workflow = StateGraph(AgentState)
         
@@ -118,7 +122,9 @@ class Grafo:
         self._logger.info(mensagem)
         
     def _triagem(self, pergunta: str):
-        prompt = Prompt()
+        prompt = Prompt(
+            
+        )
         dados = prompt.triagem(pergunta)
         return dados["resposta"].model_dump()
     
