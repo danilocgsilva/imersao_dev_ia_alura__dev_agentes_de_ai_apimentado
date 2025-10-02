@@ -12,3 +12,4 @@ app/web_framework/__pycache__/*
 app/suporte/Comandos/Rag/__pycache__/*
 app/flask_app/rotas/__pycache__/*
 app/flask_app/documentos_rag/dinamicos/*
+app/grafos/*

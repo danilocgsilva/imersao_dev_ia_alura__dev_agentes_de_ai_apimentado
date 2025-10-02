@@ -1,5 +1,5 @@
 from suporte.Comandos.ComandoBase import ComandoBase
-from typing import TypeDict, Optional
+from typing import Optional
 from suporte.AgentState import AgentState
 from suporte.SupportFactory import SupportFactory
 from suporte.Prompt import Prompt
@@ -35,8 +35,10 @@ class DesenharGrafo(ComandoBase):
         workflow.add_edge("auto_resolver", END)
         
         grafo = workflow.compile()
+
+        self._salvar_imagem(grafo)
         
-        print("Executar")
+        print("Finalizado o desenho do grafo")
         
     def _node_triagem(self, state: AgentState) -> AgentState:
         self._log("Executando o nó de triagem...")
@@ -123,12 +125,14 @@ class DesenharGrafo(ComandoBase):
         dados = prompt.triagem(pergunta)
         return dados["resposta"].model_dump()
     
-    def _salvar_imagem(self):
+    def _salvar_imagem(self, grafo):
         caminho_base: str = "/app/grafos"
         string_data_amigavel = self._gerar_string_data_amigavel()
         nome_arquivo = f"grafo_{string_data_amigavel}.png"
         nome_arquivo_caminho_cheio = os.path.join(caminho_base, nome_arquivo)
-        
+        bytes_grafico = grafo.get_graph().draw_mermaid_png()
+        with open(nome_arquivo_caminho_cheio, "wb") as f:
+            f.write(bytes_grafico)
         
     def _gerar_string_data_amigavel(self) -> str:
         return datetime.now().strftime("%Y%m%d_%Hh%Mm%Ss")
