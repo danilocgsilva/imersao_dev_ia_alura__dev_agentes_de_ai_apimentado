@@ -1,7 +1,7 @@
 from suporte.Comandos.ComandoBase import ComandoBase
 from suporte.Grafo import Grafo
 
-class RodarAgente(ComandoBase):
+class RodarAgentes(ComandoBase):
     def __init__(self):
         self._pergunta = None
 
@@ -18,7 +18,7 @@ class RodarAgente(ComandoBase):
         resposta_final = grafo.invoke({"pergunta": self._pergunta})
         triagem = resposta_final.get("triagem", {})
         print(f"PERGUNTA: {self._pergunta}")
-        print(f"DECISÃO: {triagem.get('decisao')} | URGÊNCIA: {triagem.get('urgencia')} | AÇÃO FINAL: {triagem.get('acao_final')}")
+        print(f"DECISÃO: {triagem.get('decisao')} | URGÊNCIA: {triagem.get('urgencia')} | AÇÃO FINAL: {triagem.get('decisao')}")
         print(f"RESPOSTA: {resposta_final.get('resposta')}")
         if resposta_final.get("citacoes"):
             print("CITAÇÕES")

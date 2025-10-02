@@ -12,7 +12,7 @@ from suporte.Comandos.Rag.CarregarDocumentos import CarregarDocumentos
 from suporte.Comandos.Rag.PerguntarComRag import PerguntarComRag
 from suporte.Comandos.DesenharGrafo import DesenharGrafo
 from suporte.Comandos.ListarPerguntasPadrao import ListarPerguntasPadrao
-from suporte.Comandos.RodarAgente import RodarAgente
+from suporte.Comandos.RodarAgentes import RodarAgentes
 from suporte.Banco import Banco
 import re
 
@@ -142,13 +142,13 @@ def main():
             comando = ListarPerguntasPadrao()
             comando.executar()
 
-        if args.comando == "rodar_agente":
+        if args.comando == "rodar_agentes":
             if args.id_pergunta_padrao == "":
-                print("Para o comando rodar_agente é necessário fornecer o id de uma pergunta padrão. Use o parâmetro --id-pergunta-padrao e coloque o id da pergunta padrão. Para ver as perguntas padrões disponíveis, execute o comando listar_perguntas_padrao.")
+                print("Para o comando rodar_agentes é necessário fornecer o id de uma pergunta padrão. Use o parâmetro --id-pergunta-padrao e coloque o id da pergunta padrão. Para ver as perguntas padrões disponíveis, execute o comando listar_perguntas_padrao.")
             else:
                 banco = Banco()
                 pergunta = banco.buscar_pergunta_padrao(int(args.id_pergunta_padrao))
-                comando = RodarAgente()
+                comando = RodarAgentes()
                 comando.pergunta = pergunta
                 comando.executar()
             

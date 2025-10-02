@@ -107,7 +107,13 @@ class Grafo:
         KEYWORDS_ABRIR_TICKET = ["aprovação", "exceção", "liberação", "abrir ticket", "abrir chamado", "acesso especial"]
         
         print("Decidindo após o auto_resolver...")
-        
+
+        # print("*" * 20)
+        # print(state)
+        # print("*" * 20)
+        # print(state['acao_final'])
+        # print("*" * 20)
+
         if state["rag_sucesso"]:
             print("Rag com sucesso, finalizando o fluxo.")
             return "ok"
