@@ -25,6 +25,15 @@ class DesenharGrafo(ComandoBase):
             "triagem",
             self._decidir_pos_triagem,
             {
+                "auto": "auto_resolver",
+                "info": "pedir_info",
+                "chamado": "abrir_chamado"
+            }
+        )
+        workflow.add_conditional_edges(
+            "auto_resolver",
+            self._decidir_pos_auto_resolver,
+            {
                 "info": "pedir_info",
                 "chamado": "abrir_chamado",
                 "ok": END
@@ -36,9 +45,9 @@ class DesenharGrafo(ComandoBase):
         
         grafo = workflow.compile()
 
-        self._salvar_imagem(grafo)
+        resultados = self._salvar_imagem(grafo)
         
-        print("Finalizado o desenho do grafo")
+        print(f"Finalizado o desenho do grafo: {resultados['caminho']}")
         
     def _node_triagem(self, state: AgentState) -> AgentState:
         self._log("Executando o nó de triagem...")
@@ -133,6 +142,10 @@ class DesenharGrafo(ComandoBase):
         bytes_grafico = grafo.get_graph().draw_mermaid_png()
         with open(nome_arquivo_caminho_cheio, "wb") as f:
             f.write(bytes_grafico)
+        return {
+            "nome_arquivo": nome_arquivo,
+            "caminho": nome_arquivo_caminho_cheio
+        }
         
     def _gerar_string_data_amigavel(self) -> str:
         return datetime.now().strftime("%Y%m%d_%Hh%Mm%Ss")
