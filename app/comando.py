@@ -11,6 +11,7 @@ from suporte.Comandos.Rag.VerChunksDocumentos import VerChunksDocumentos
 from suporte.Comandos.Rag.CarregarDocumentos import CarregarDocumentos
 from suporte.Comandos.Rag.PerguntarComRag import PerguntarComRag
 from suporte.Comandos.DesenharGrafo import DesenharGrafo
+from suporte.Comandos.ListarPerguntasPadrao import ListarPerguntasPadrao
 import re
 
 def clean_filename(filename):
@@ -128,6 +129,10 @@ def main():
                 args.chunk_overlap,
                 args.apenas_conteudo
             )
+
+        if args.comando == "listar_perguntas_padrao":
+            comando = ListarPerguntasPadrao()
+            comando.executar()
             
         if args.comando == "perguntar":
             if args.pergunta == "":
