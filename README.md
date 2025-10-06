@@ -56,25 +56,16 @@ Ferramentas como Chats de outros providers (Deepseek e ChatGPT) já estão muito
 
 ### Variáveis de ambiente
 
-É importante copiar o arquivo `.env.exemplo` para um outro arquivo chamado `.env`, substituindo as informações necessárias. Destaque para a variável `CHAVE_API_GOOGLE`, que é preciso ser gerada no Google, caso contrário não será possível acessar a api do Google.
+Depois que clonar o repositório, deve-se copiar o arquivo `.env.exemplo` para um outro arquivo chamado `.env`, substituindo as informações necessárias. Destaque para a variável `CHAVE_API_GOOGLE`, que é preciso ser gerada no Google, caso contrário não será possível acessar a api do Google.
 
 ### Compilando o ambiente
 
 Execute o seguinte comando:
 ```
-docker compose up -d --build
+docker compose up --build
 ```
+Este comando já dispara o script da receita do ambiente, que compila o ambiente, instala as dependências, faz a migration de banco de dados, baixa os modelos disponíveis pelo Google e iniciar o servidor Flask. Depois de terminar se subir o ambiente, basta acessar `http://localhost:5000`, e você verá a aplicação no ar para ser testada.
 
-Depois, será necessário construir migrar o banco de dados. Execute:
-
-```
-docker exec -it imersao_alura_agentes_ia_ambiente python3 -m comando --comando migrar
-```
-
-Ou, pode entrar no container e o comando é mais simples:
-```
-python3 -m comando --comando migrar
-```
 
 ### Log
 
