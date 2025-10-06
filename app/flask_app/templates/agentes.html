@@ -1,0 +1,65 @@
+{% extends "_base.html" %}
+
+{% block content %}
+
+<div class="max-w-4xl mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold text-center text-gray-800 mb-8">{{ view_model.h1 }}</h1>
+
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+        <p>Para testar os agentes, não foi possível colocar em uma interface web.</p>
+        <p>Uma parte muito importante, integrante dessa aplicação é o framework de comandos, criado para testar partes
+            mais específicas da aplicação. No caso, a ativação dos agentes, que ocorre na última aula da imersão só é
+            possível através do framework de comando.</p>
+        <p>Para ativar os agentes, é necessário entrar na linha de comando e executar comandos, e verificar o resultado
+            na saída padrão do terminal.</p>
+        <p>O comando para ativar o agente é <code>rodar_agentes</code>. E eles estão rodando apenas com as perguntas
+            padrões da aplicação.</p>
+        <p class="pb-4">Para verificar as perguntas padrões disponíveis, rode o comando:</p>
+        <hr />
+        <div class="pt-2 pb-2">
+            <code>python3 -m comando --comando listar_perguntas_padrao</code>
+        </div>
+        <hr />
+        <p class="pt-4 pb-4">Então terá a seguinte saída:</p>
+        <hr />
+        <div class="pt-2 pb-2">
+            <code>
+1 - Qual é a capital da França?<br />
+2 - Posso reembolsar a internet?<br />
+3 - Qual é a capital da Itália?<br />
+4 - Posso reembolsar a internet?<br />
+5 - Posso reembolsar eventuais refeições quando eu estiver em viagem?<br />
+6 - Quero mais 5 dias de trabalho remoto. Como faço?<br />
+7 - Posso reembolsar cursos ou treinamentos da Alura<br />
+8 - Quantas capivaras tem no rio Pinheiros?<br />
+9 - É possível reembolsar certificações do Google Cloud?<br />
+10 - Posso obter o Google Gemini de graça?<br />
+11 - Estou precisando de um atendimento médico do meu plano de saúde e eles estão demorando para me responder. Poderia agilizar?<br />
+</code>
+        </div>
+        <hr />
+        <p class="pt-2 pb-2">Os números à frente são os ids das perguntas que estão disponíveis para serem utilizados no
+            comando para ativação dos agentes. Então basta usar qualquer um para testar o caminho que o agente pode
+            fazer. Segue o seguinte comando para testar o agente:</p>
+        <hr />
+        <div class="pt-2 pb-2">
+            <code>python3 -m comando --comando rodar_agentes --id-pergunta-padrao 11</code>
+        </div>
+        <hr />
+        <p class="pt-2 pb-2">E isso gera a saída semelhante àquela sugerida pela última aula da imersão.</p>
+        <hr />
+        <div class="pt-2 pb-2">
+<code>
+    WARNING: All log messages before absl::InitializeLog() is called are written to STDERR<br />
+E0000 00:00:1759774459.930940   38802 alts_credentials.cc:93] ALTS creds ignored. Not running on GCP and untrusted ALTS is not enabled.<br />
+Decidindo pós triagem...<br />
+Executando o nó de abrir chamado...<br />
+PERGUNTA: Estou precisando de um atendimento médico do meu plano de saúde e eles estão demorando para me responder. Poderia agilizar?<br />
+DECISÃO: ABRIR_CHAMADO | URGÊNCIA: ALTA | AÇÃO FINAL: ABRIR_CHAMADO<br />
+RESPOSTA: Abrindo chamado com urgência ALTA. Descrição: Estou precisando de um atendimento médico do meu plano de saúde e eles estão demorando para me responder. Poderia agilizar?<br />
+</code>
+        </div>
+        <hr />
+    </div>
+</div>
+{% endblock %}

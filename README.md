@@ -72,7 +72,13 @@ Este comando já dispara o script da receita do ambiente, que compila o ambiente
 
 Por padrão, a aplicação mantém um arquivo na raiz chamado `app.log`. As atividades realizadas costuma escrever nesse arquivo para permitir o monitoramento.
 
+Para acompanhar mensagens adicionais no log, sugiro abrir uma nova janela e usar o `tail -f app.log` para ver eventuais mensagens para dar informações adicionais sobre os processos internos da execução dos comandos e das atividades feitas na aplicação web.
+
 ## Recursos
+
+### Banco de dados
+
+Essa aplicação utiliza um banco de dados mysql para poder armazenar configurações da aplicação. Ela está disponível na porta 3306. Para mais informações sobre o banco (incluindo o acesso do mesmo), ou personalizar a porta, caso a 3306 já esteja ocupada, verifique os valores no arquivo `.env`. Pode alterar os valores e em seguida, reconstruir o ambiente docker para poder operar com os novos valores.
 
 ### Comandos
 
@@ -111,11 +117,91 @@ docker exec -it imersao_alura_agentes_ia_ambiente python3 comando.py --comando r
 
 Este comando aciona a api do Google para listar os modelos disponíveis e salva no banco de dados relacional na tabela `modelos`, e detalhes dos modelos ficam armazenados na tabela `modelos_meta_dados`.
 
+## Lista de comandos
+
 Segue a lista de comandos possíveis (sintaxe para execução de dentro do container):
 
 ### carregar_documentos
 ```
 python3 -m comando --comando carregar_documentos
 ```
+Comp parte do processo de RAG, é necessário que o código saiba carregar os documentos. Executar esse comando faz o carregamento dos documentos para o RAG.
 
+Use `tail -f app.log` para ver informações adicionais.
+
+### alterar_ordem_modelo
+```
+python3 -m comando --comando alterar_ordem_modelo --ordem 2 --modelo "models/gemini-2.5-pro"
+```
+Lida com o valor a ser registrado no banco de dados relacionado à ordem em que aparecem na interface da aplicação web.
+
+A listagem de modelos obedece, primeiro, ao campo `ordem` dentro da tabela `modelos`, e em seguida, o nome do modelo. Esse é um artifício para poder alterar a ordem de exibição da listagem de modelos na interface.
+
+Como valor de `--ordem`, utilize qualquer valor inteiro. Para o valor de `--modelo`, consulta os modelos disponíveis na tabela `modelos`.
+
+### desenhar_grafo
+```
+python3 -m comando --comando desenhar_grafo
+```
+Como parte do exercício de testar as configurações do `langgraph`, esse comando gera uma imagem pelo método `draw_mermaid_png` de `StateGraph` (`langgraph`). Como pode-se ver na saída do comando, ele gera um arquivo na pasta `grafos`, que se trata do png demonstrado em aula.
+
+### limpar_banco
+```
+python3 -m comando --comando limpar_banco
+```
+Durante o desenvolvimento, foi necessário fazer algumas alterações estruturais no banco de dados. E para facilitar o processo, foi criado esse comando que remove completamente o banco de dados.
+
+### listar_perguntas_padrao
+```
+python3 -m comando --comando listar_perguntas_padrao
+```
+São as perguntas padrão disponíveis para fazer os teste de perguntas para a IA de forma mais estruturada. A saída desse comando também expõe os ids das perguntas que podem ser utilizados pelo comando `rodar_agentes`, que apenas aceita as perguntas padrões.
+
+### rodar_agentes
+```
+python3 -m comando --comando rodar_agentes --id-pergunta-padrao 11
+```
+Este comando exige também o parâmetro `--id-pergunta-padrao`, onde se exige um id que é fornecido pelo comando `listar_perguntas_padrao`.
+
+### migrar
+```
+python3 -m comando --comando migrar
+```
+Comando criado para facilitar o desenvolvimento. Responsável por fazer a migração do banco de dados. No startup do ambiente, ele já é rodado automaticamente e só funciona quando ainda não há um banco de dados para que a aplicação possa rodar.
+
+## perguntar
+```
+python3 -m comando --comando perguntar --pergunta "Qual a composicao do nucleo do sol?"
+```
+Faz uma pergunta pela linha de comando.
+
+## registrar_modelos_disponiveis
+```
+python3 -m comando --comando registrar_modelos_disponiveis
+```
+Esse comando é rodado automaticamente na compilação do ambiente. Ele foi bem útil quando ele precisava ser rodado à parte para preencher o banco de dados com os modelos disponíveis pelo Google. Ainda é interessante ver o que o Google disponibiliza em termos de api para que possamos consultar quais modelos estão disponíveis.
+
+## renovar_banco
+```
+python3 -m comando --comando renovar_banco
+```
+Executa ao mesmo tempo o comando `limpar_banco` e `migrar`. Útil para quando se deseja renovar o banco de dados de forma mais conveniente quando houve mudança de estrutura do banco de dados.
+
+### listar_documentos_rag
+```
+python3 -m comando --comando listar_documentos_rag
+```
+Lista todos os documentos que estarão disponíveis para serem consultados no momento que for respondida uma pergunta que considere o RAG. Repare que ele interage com as configurações feitas pela aplicação web quanto à adição de documentos adicionais e desativações dos documentos padrões.
+
+## perguntar_com_rag
+```
+python3 -m comando --comando perguntar_com_rag --pergunta 'Posso pedir reembolso em gastos de viagens?'
+```
+Faz uma pergunta pela linha de comando considerando o RAG. Repare que é necessário parâmetro adicional `--pergunta` e em seguida munir com a pergunta em si. Ele responde com o formato cheio mostrado na imersão.
+
+## ver_chunks_documentos
+```
+python3 -m comando --comando ver_chunks_documentos
+```
+Carrega os documentos para RAG e exibe os fragmentos que são analisados pela IA para a resposta.
 

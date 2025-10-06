@@ -17,7 +17,7 @@
     <nav class="bg-blue-600 text-white shadow-lg">
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex justify-between items-center py-4">
-                <a href="#" class="text-xl font-bold">{{ view_model.nome_pagina_amigavel }}</a>
+                <p class="text-xl font-bold">{{ view_model.nome_pagina_amigavel }}</p>
                 
                 <div class="md:hidden">
                     <button id="menu-toggle" class="focus:outline-none">
@@ -31,6 +31,7 @@
                     <a href="{{ url_for('pergunta_simples.perguntar') }}" class="hover:text-blue-200 transition">Faça uma pergunta</a>
                     <a href="{{ url_for('resposta_estruturada.prompt') }}" class="hover:text-blue-200 transition">Resposta Estruturada</a>
                     <a href="{{ url_for('rag.rag') }}" class="hover:text-blue-200 transition">Rag</a>
+                    <a href="{{ url_for('agentes') }}" class="hover:text-blue-200 transition">Agentes</a>
                 </div>
             </div>
             
@@ -38,6 +39,7 @@
                 <a href="{{ url_for('pergunta_simples.perguntar') }}" class="block py-2 hover:bg-blue-500 px-4 rounded transition">Faça uma pergunta</a>
                 <a href="{{ url_for('resposta_estruturada.prompt') }}" class="block py-2 hover:bg-blue-500 px-4 rounded transition">Resposta Estruturada</a>
                 <a href="{{ url_for('rag.rag') }}" class="block py-2 hover:bg-blue-500 px-4 rounded transition">Rag</a>
+                <a href="{{ url_for('agentes') }}" class="block py-2 hover:bg-blue-500 px-4 rounded transition">Agentes</a>
             </div>
         </div>
     </nav>

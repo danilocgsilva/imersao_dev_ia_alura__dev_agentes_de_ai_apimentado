@@ -1,8 +1,9 @@
-from flask import Flask, Blueprint, url_for, redirect
+from flask import Flask, Blueprint, url_for, redirect, render_template
 from flask_app.rotas.pergunta_simples import pergunta_simples
 from flask_app.rotas.resposta_estruturada import resposta_estruturada
 from flask_app.rotas.rag import rag
 from suporte.Banco import Banco
+from flask_app.template_models.Agentes import Agentes
 
 web_framework = Flask(__name__)
 web_framework.secret_key = '45638a90-23f1-47a1-b0a0-57465d954172'
@@ -27,4 +28,8 @@ def inject_functions():
 @web_framework.route("/", endpoint="index", methods=['GET'])
 def index():
     return redirect(url_for("pergunta_simples.perguntar"))
+
+@web_framework.route("/agentes", endpoint="agentes", methods=['GET'])
+def agentes():
+    return render_template("agentes.html", view_model=Agentes())
     
