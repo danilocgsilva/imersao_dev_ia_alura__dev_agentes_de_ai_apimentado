@@ -66,26 +66,11 @@ docker compose up --build
 ```
 Este comando já dispara o script da receita do ambiente, que compila o ambiente, instala as dependências, faz a migration de banco de dados, baixa os modelos disponíveis pelo Google e iniciar o servidor Flask. Depois de terminar se subir o ambiente, basta acessar `http://localhost:5000`, e você verá a aplicação no ar para ser testada.
 
+![print_screen_primeira_tela.png](print_screen_primeira_tela.png)
 
 ### Log
 
 Por padrão, a aplicação mantém um arquivo na raiz chamado `app.log`. As atividades realizadas costuma escrever nesse arquivo para permitir o monitoramento.
-
-### Aplicação web
-
-Os recursos de IA também estão disponíveis através de uma aplicação web. Existe o script `iniciar_flask.sh`, que pode ser iniciado dentro do container, servido uma aplicação web na porta 5000.
-
-Entre no container e execute:
-
-```
-/iniciar_flask.sh
-```
-
-E então será possível acessar a aplicação web no seguinte endereço:
-
-```
-http://localhost:5000
-```
 
 ## Recursos
 
@@ -125,5 +110,12 @@ docker exec -it imersao_alura_agentes_ia_ambiente python3 comando.py --comando r
 ```
 
 Este comando aciona a api do Google para listar os modelos disponíveis e salva no banco de dados relacional na tabela `modelos`, e detalhes dos modelos ficam armazenados na tabela `modelos_meta_dados`.
+
+Segue a lista de comandos possíveis (sintaxe para execução de dentro do container):
+
+### carregar_documentos
+```
+python3 -m comando --comando carregar_documentos
+```
 
 
