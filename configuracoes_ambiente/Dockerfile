@@ -8,6 +8,7 @@ RUN apt-get install \
     python3 \
     python3-pip \
     mariadb-client \
+    dos2unix \
     -y
 RUN pip install --upgrade pip-tools --break-system-packages
 
@@ -15,8 +16,7 @@ RUN curl -sL https://deb.nodesource.com/setup_24.x | bash -
 RUN apt-get install -y nodejs
 
 COPY instalar_dependencias_e_manter.sh /instalar_dependencias_e_manter.sh
+RUN dos2unix /instalar_dependencias_e_manter.sh
 RUN chmod +x /instalar_dependencias_e_manter.sh
-COPY iniciar_flask.sh /iniciar_flask.sh
-RUN chmod +x /iniciar_flask.sh
 
 CMD /instalar_dependencias_e_manter.sh
