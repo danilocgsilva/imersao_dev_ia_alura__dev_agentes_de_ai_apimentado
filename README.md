@@ -64,7 +64,13 @@ Execute o seguinte comando:
 ```
 docker compose up --build
 ```
-Este comando já dispara o script da receita do ambiente, que compila o ambiente, instala as dependências, faz a migration de banco de dados, baixa os modelos disponíveis pelo Google e iniciar o servidor Flask. Depois de terminar se subir o ambiente, basta acessar `http://localhost:5000`, e você verá a aplicação no ar para ser testada.
+Este comando já dispara o script da receita do ambiente, que compila o ambiente, instala as dependências, faz a migration de banco de dados, baixa os modelos disponíveis pelo Google e iniciar o servidor Flask.
+
+Após alguns instantes, você consegue ver pelo terminal a mensagem que sinaliza que o servidor Flask está sendo servido. É o momento que a compilação do ambiente terminou.
+
+![inicio_servidor.png](inicio_servidor.png)
+
+Depois de terminar se subir o ambiente, basta acessar `http://localhost:5000`, e você verá a aplicação no ar para ser testada.
 
 ![print_screen_primeira_tela.png](print_screen_primeira_tela.png)
 
